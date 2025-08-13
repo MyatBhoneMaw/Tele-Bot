@@ -54,12 +54,12 @@ class TelegramController extends Controller
         if ($userText === 'ဖိုးသာထူး') {
             Telegram::sendMessage([
                 'chat_id' => $chatId,
-                'text' => 'ဖိုးသာထူး ဖိုးသာထူး KMKL ဖိုသာထူး',//သင် 15K Plan ကို ရွေးခဲ့ပါတယ်။Payment အတည်ပြုပါ။
+                'text' => 'ဖိုးသာထူး ဖိုးသာထူး KMKL ဖိုသာထူး', //သင် 15K Plan ကို ရွေးခဲ့ပါတယ်။Payment အတည်ပြုပါ။
             ]);
         } elseif ($userText === 'မင်းတို့က') {
             Telegram::sendMessage([
                 'chat_id' => $chatId,
-                'text' => 'မင်းတို့က မဟုတ်တော့ဘူးကွ သုံးယောက်တစ်ယောက်ကို',//သင် 20K Plan ကို ရွေးခဲ့ပါတယ်။Payment အတည်ပြုပါ။
+                'text' => 'မင်းတို့က မဟုတ်တော့ဘူးကွ သုံးယောက်တစ်ယောက်ကို', //သင် 20K Plan ကို ရွေးခဲ့ပါတယ်။Payment အတည်ပြုပါ။
             ]);
         } else {
             Telegram::sendMessage([
@@ -71,4 +71,3 @@ class TelegramController extends Controller
         return 'Checked user reply.';
     }
 }
-
