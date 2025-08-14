@@ -11,8 +11,78 @@ class TelegramBotPoll extends Command
     protected $signature = 'telegram:poll';
     protected $description = 'Run Telegram Bot with Long Polling';
 
-    public function handle()
-    {
+
+    /**
+     * for poem & book
+     */
+    // public function handle(){
+    //     $telegram = new Api();
+
+    //     $offset = 0;
+
+    //     $this->info('Bot polling started...');
+
+    //     while (true) {
+    //         $updates = $telegram->getUpdates([
+    //             'offset' => $offset + 1,
+    //             'timeout' => 10,
+    //         ]);
+
+    //         foreach ($updates as $update) {
+    //             $offset = $update->getUpdateId();
+
+    //             // Handle /start
+    //             if (isset($update['message']['text'])) {
+    //                 $chatId = $update['message']['chat']['id'];
+    //                 $text = $update['message']['text'];
+
+    //                 if ($text === '/start' || $update['message']['text']) {
+    //                     $keyboard = Keyboard::make()
+    //                         ->inline()
+    //                         ->row([Keyboard::inlineButton(['text' => 'ကဗျာတွေ', 'callback_data' => 'option_a']), Keyboard::inlineButton(['text' => 'စာအုပ်တွေ', 'callback_data' => 'option_b'])]);
+
+    //                     $telegram->sendMessage([
+    //                         'chat_id' => $chatId,
+    //                         'text' => 'မိတ်ဆွေ ကဗျာတွေ ဖတ်မှာလား ဒါမှမဟုတ် စာအုပ်တွေ ဖတ်မှာလား',
+    //                         'reply_markup' => $keyboard,
+    //                     ]);
+    //                 }
+    //             }
+
+    //             // Handle Callback Query
+    //             if (isset($update['callback_query'])) {
+    //                 $chatId = $update['callback_query']['message']['chat']['id'];
+    //                 $data = $update['callback_query']['data'];
+
+    //                 $responseText = match ($data) {
+    //                     'option_a' => 't.me/gabyargallery',
+    //                     'option_b' => 't.me/mmliteratureadmin',
+    //                     default => 'တစ်ခုကို ရွေးချယ်ပါ',
+    //                 };
+
+    //                 // First message: plan confirmation
+    //                 $telegram->sendMessage([
+    //                     'chat_id' => $chatId,
+    //                     'text' => $responseText,
+    //                 ]);
+
+    //                 // Second message: confirm payment
+    //                 // $telegram->sendMessage([
+    //                 //     'chat_id' => $chatId,
+    //                 //     'text' => 'Payment အတည်ပြုပါ',
+    //                 // ]);
+    //             }
+    //         }
+
+    //         sleep(1);
+    //     }
+    // }
+
+
+    /**
+     * for project
+     */
+     public function handle(){
         $telegram = new Api();
 
         $offset = 0;
@@ -36,11 +106,11 @@ class TelegramBotPoll extends Command
                     if ($text === '/start' || $update['message']['text']) {
                         $keyboard = Keyboard::make()
                             ->inline()
-                            ->row([Keyboard::inlineButton(['text' => 'ကဗျာတွေ', 'callback_data' => 'option_a']), Keyboard::inlineButton(['text' => 'စာအုပ်တွေ', 'callback_data' => 'option_b'])]);
+                            ->row([Keyboard::inlineButton(['text' => '15K Plan', 'callback_data' => 'option_a']), Keyboard::inlineButton(['text' => '25K Plan', 'callback_data' => 'option_b'])]);
 
                         $telegram->sendMessage([
                             'chat_id' => $chatId,
-                            'text' => 'မိတ်ဆွေ ကဗျာတွေ ဖတ်မှာလား ဒါမှမဟုတ် စာအုပ်တွေ ဖတ်မှာလား',
+                            'text' => 'မိတ်ဆွေအသုံးပြုလိုသော package ကို ရွေးပါ',
                             'reply_markup' => $keyboard,
                         ]);
                     }
@@ -52,8 +122,8 @@ class TelegramBotPoll extends Command
                     $data = $update['callback_query']['data'];
 
                     $responseText = match ($data) {
-                        'option_a' => 't.me/gabyargallery',
-                        'option_b' => 't.me/mmliteratureadmin',
+                        'option_a' => 'မိတ်ဆွေ 15K Plan ကိုရွေးချယ်ခဲ့ပါသည်။',
+                        'option_b' => 'မိတ်ဆွေ 25K Plan ကိုရွေးချယ်ခဲ့ပါသည်။',
                         default => 'တစ်ခုကို ရွေးချယ်ပါ',
                     };
 
@@ -64,10 +134,18 @@ class TelegramBotPoll extends Command
                     ]);
 
                     // Second message: confirm payment
-                    // $telegram->sendMessage([
-                    //     'chat_id' => $chatId,
-                    //     'text' => 'Payment အတည်ပြုပါ',
-                    // ]);
+                    $telegram->sendMessage([
+                        'chat_id' => $chatId,
+                        'text' => 'Payment အတည်ပြုပါ',
+                    ]);
+                }
+
+                if(isset($update['message']['text'])){
+                    $chatId = $update['message']['chat']['id'];
+                    $telegram->sendMessage([
+                        'chat_id' => $chatId,
+                        'text' => 'သင်ရွေးချယ်ထားသော Plan Package အားဖြည့်ပေးထားပါပြီ။သင့်ဖုန်းတွင် စစ်ဆေးပါ။မရောက်သေးပါက ၁ နာရီ အတွင်း အကြောင်းကြားရန် - 0978654321 အားဆက်သွယ်ပါ။'
+                    ]);
                 }
             }
 
@@ -75,9 +153,10 @@ class TelegramBotPoll extends Command
         }
     }
 
-
-    // public function handle()
-    // {
+    /**
+     * စုစု
+     */
+    // public function handle(){
     //     $telegram = new Api();
 
     //     $offset = 0;
@@ -149,34 +228,5 @@ class TelegramBotPoll extends Command
 
 
 
-// Handle Callback Query
-// if (isset($update['callback_query'])) {
-//     $chatId = $update['callback_query']['message']['chat']['id'];
-//     $data = $update['callback_query']['data'];
 
-//     $responseText = match ($data) {
-//         'option_a' => 'သင် 15K plan ကို ရွေးချယ်ခဲ့ပါသည်။',
-//         'option_b' => 'သင် 25K plan ကို ရွေးချယ်ခဲ့ပါသည်။',
-//         default => 'Unknown choice',
-//     };
 
-//     $telegram->sendMessage([
-//         'chat_id' => $chatId,
-//         'text' => $responseText,
-//     ]);
-// }
-// if (isset($update['callback_query'])) {
-//     $chatId = $update['callback_query']['message']['chat']['id'];
-//     $data = $update['callback_query']['data'];
-
-//     // $responseText = match ($data) {
-//     //     'option_a' => 'သင် 15K plan ကို ရွေးချယ်ခဲ့ပါသည်။',
-//     //     'option_b' => 'သင် 25K plan ကို ရွေးချယ်ခဲ့ပါသည်။',
-//     //     default => 'Unknown choice',
-//     // };
-
-//     $telegram->sendMessage([
-//         'chat_id' => $chatId,
-//         'text' => 'Payment အတည်ပြုပါ',
-//     ]);
-// }
