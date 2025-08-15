@@ -12,6 +12,19 @@ class TelegramBotPoll extends Command
     protected $signature = 'telegram:poll';
     protected $description = 'Run Telegram Bot with Long Polling';
 
+    /**
+    * /start ကိုပေးလာလျှင်
+    *handleStart() function ဖြင့် ပြန်လည်ဖြေကြားတယ်။
+    *Number (ဖုန်းနံပါတ်) ပေးလာလျှင်
+    *"ဖုန်းနံပါတ် စစ်ဆေးနေသည်..." ဟု message တစ်ခုပေးတယ်။
+    *ဖုန်းနံပါတ်သည် ATOM (097########) format ဖြစ်/မဖြစ် စစ်တယ်။
+    *မှန်ကန်ပါက 15K / 25K Plan button များ ပြပေးတယ်။
+    *မှားယွင်းပါက ဖုန်းနံပါတ် မှားကြောင်း ပြောပြတယ်။
+    *တခြားစာသားများ ပေးလာလျှင်
+    *"ဖုန်းနံပါတ်ပေးပါ" ဟု ပြန်ပြောတယ်။
+    *User က Button တစ်ခုကိုနှိပ်လျှင်
+    *handleCallbackQuery() ဖြင့် ဆက်လက် လုပ်တယ်။
+     */
     public function handle()
     {
         $telegram = new Api();
