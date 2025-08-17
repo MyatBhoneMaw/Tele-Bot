@@ -11,7 +11,7 @@
 import { useBreakpoints } from '@vueuse/core'
 import DesktopLogin from '../components/Desktop/login.vue'
 import MobileLogin from '../components/Mobile/login.vue'
-// Define your custom breakpoints
+
 const breakpoints = useBreakpoints({
   sm: 640,
   md: 768,

@@ -71,4 +71,8 @@
     </div>
 </template>
 
-<script setup></script>
+<script setup>
+import apiClient from '../../utils/server';
+
+
+</script>
