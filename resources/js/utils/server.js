@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-const apiClient = axios.create({
-  baseURL: '/api', // API Prefix
+const api = axios.create({
+  baseURL: '/api',
   withCredentials: true,
   headers: {
     'X-Requested-With': 'XMLHttpRequest',
@@ -9,18 +9,16 @@ const apiClient = axios.create({
   },
 });
 
-// Add Authorization header dynamically (optional)
-apiClient.interceptors.request.use((config) => {
-  const token = localStorage.getItem('token'); // Adjust as needed
+api.interceptors.request.use((config) => {
+  const token = localStorage.getItem('token');
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }
   return config;
 });
 
-// CSRF Cookie for Sanctum
 async function getCsrfToken() {
-  await apiClient.get('/sanctum/csrf-cookie');
+  await api.get('/sanctum/csrf-cookie');
 }
 
-export { apiClient, getCsrfToken };
+export { api, getCsrfToken };

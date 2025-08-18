@@ -72,7 +72,7 @@
 </template>
 
 <script setup>
-import apiClient from '../../utils/server';
+import api from '../../utils/server';
 
 
 </script>
