@@ -19,7 +19,7 @@
 </template>
 
 <script setup>
-import { api, getCsrfToken } from '../../utils/server.js';
+
 
 await getCsrfToken();
 
