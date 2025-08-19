@@ -3,8 +3,7 @@
     <MobileLogin />
   </div>
   <div v-else-if="isTabletOrDesktop">
-    heollo
-    <DesktopLogin />
+    <DesktopLogin/>
   </div>
 </template>
 
