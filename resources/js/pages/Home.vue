@@ -1,11 +1,22 @@
 <template>
-    <div>
-        <div class="flex flex-col">
-            <label for="">Phone</label>
-            <input type="text" placeholder="Phone" class="border py-3 px-3" >
-        </div>
+    <div v-if="isTabletOrDesktop">
+        <DesktopHome />
     </div>
 </template>
 
-<script>
+<script setup>
+import { useBreakpoints } from '@vueuse/core'
+import DesktopHome from '@/components/Desktop/home.vue'
+
+const breakpoints = useBreakpoints({
+  sm: 640,
+  md: 768,
+  lg: 1024,
+})
+
+// Mobile < 768px
+const isMobile = breakpoints.smaller('md')
+
+// Tablet or Desktop ≥ 768px
+const isTabletOrDesktop = breakpoints.greaterOrEqual('md')
 </script>
