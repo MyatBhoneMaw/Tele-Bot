@@ -6,7 +6,7 @@
 
 <script setup>
 import { useBreakpoints } from '@vueuse/core'
-import DesktopHome from '@/components/Desktop/home.vue'
+import DesktopHome from '@/components/Desktop/Home.vue'
 
 const breakpoints = useBreakpoints({
   sm: 640,
