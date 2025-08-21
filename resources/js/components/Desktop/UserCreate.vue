@@ -9,27 +9,27 @@
                     <div class="py-2">
                         <label for="" class="text-cyan-200 animate-fade-in-up">Name :</label>
                     </div>
-                    <input type="text" placeholder="Name" class="border outline-0 py-2 px-3 border-cyan-500  focus:border-cyan-900 rounded">
+                    <input type="text" v-model="form.name" placeholder="Name" class="border outline-0 py-2 px-3 border-cyan-500  focus:border-cyan-900 rounded">
                 </div>
                 <div class="mt-4">
                     <div class="py-2">
                         <label for="" class="text-cyan-200 animate-fade-in-up">Email :</label>
                     </div>
-                    <input type="text" placeholder="Email"
+                    <input type="text" placeholder="Email" v-model="form.email"
                         class="border outline-0 py-2 px-3 border-cyan-500 rounded  focus:border-cyan-900">
                 </div>
                 <div class="mt-4">
                     <div class="py-2">
                         <label for="" class="text-cyan-200 animate-fade-in-up">Phone :</label>
                     </div>
-                    <input type="text" placeholder="Phone Number"
+                    <input type="text" placeholder="Phone Number" v-model="form.phone"
                         class="border outline-0 py-2 px-3  focus:border-cyan-900 border-cyan-500 rounded">
                 </div>
                 <div class="mt-4">
                     <div class="py-2">
                         <label for="" class="text-cyan-200 animate-fade-in-up">Password :</label>
                     </div>
-                    <input type="text" placeholder="Password"
+                    <input type="password" placeholder="Password" v-model="form.password"
                         class="border outline-0 py-2 px-3  focus:border-cyan-900 border-cyan-500 rounded">
                 </div>
                 <div class="flex float-end py-4">
@@ -39,3 +39,14 @@
         </div>
     </div>
 </template>
+
+<script setup>
+import { ref } from 'vue'
+
+const form = ref({
+    name : '',
+    email : '',
+    phone : '',
+    password : ''
+})
+</script>
