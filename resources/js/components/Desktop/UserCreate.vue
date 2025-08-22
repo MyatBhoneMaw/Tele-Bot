@@ -2,7 +2,7 @@
     <div class="flex justify-center py-4">
         <div class="outline-2 outline-blue-500/50 rounded-2xl outline-offset-2 outline-dotted py-4 px-8">
             <div class="bg-blue-200 py-2 text-center my-3 rounded-md">
-                <h1 class="text-cyan-600 text-lg animate-fade-in-up select-none">{{ success ? success : 'Create User' }}
+                <h1 class="text-cyan-600 text-lg animate-fade-in-up select-none">Create User
                 </h1>
             </div>
             <form class="text-white py-2" @submit.prevent="userCreate">
@@ -48,15 +48,9 @@
 </template>
 
 <script setup>
-    import {
-        ref
-    } from 'vue'
-    import {
-        post
-    } from '@/utils/api'
-    import {
-        useRouter
-    } from 'vue-router';
+    import { ref } from 'vue'
+    import { post } from '@/utils/api'
+    import { useRouter } from 'vue-router';
     const router = useRouter();
     const form = ref({
         name: '',
