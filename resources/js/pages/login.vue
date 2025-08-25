@@ -1,5 +1,22 @@
 <template>
-  <div>
-    Hello Login Page
-  </div>
+    <div v-if="isTabletOrDesktop">
+        <DesktopLogin />
+    </div>
 </template>
+
+<script setup>
+import { useBreakpoints } from '@vueuse/core'
+import DesktopLogin from '@/components/Desktop/Login.vue'
+
+const breakpoints = useBreakpoints({
+  sm: 640,
+  md: 768,
+  lg: 1024,
+})
+
+// Mobile < 768px
+const isMobile = breakpoints.smaller('md')
+
+// Tablet or Desktop ≥ 768px
+const isTabletOrDesktop = breakpoints.greaterOrEqual('md')
+</script>
