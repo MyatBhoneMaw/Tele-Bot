@@ -1,10 +1,10 @@
 <template>
   <layout>
-    <div class="min-h-screen text-white flex flex-col items-center py-10 px-4">
+    <div class="min-h-screen flex flex-col items-center py-10 px-4 select-none">
       
-      <!-- Title Card -->
+      <!-- Title -->
       <div class="w-full max-w-xl bg-cyan-950 text-center py-4 rounded shadow-md">
-        <h1 class="text-2xl font-semibold text-cyan-400 animate-fade-in-up select-none">
+        <h1 class="text-2xl font-semibold text-cyan-400 animate-fade-in-up">
           {{ success ? success : 'Create User' }}
         </h1>
       </div>
@@ -21,7 +21,7 @@
               v-model="form.name"
               placeholder="Full Name"
               id="name"
-              class="w-full bg-gray-800 border border-cyan-500 text-white px-4 py-2 rounded focus:outline-none focus:ring-2 focus:ring-cyan-500"
+              class="w-full bg-gray-800 border border-cyan-500  px-4 py-2 rounded focus:outline-none focus:ring-2 focus:ring-cyan-500"
             />
             <p v-if="message.name" class="mt-1 text-sm text-red-500">{{ message.name[0] }}</p>
           </div>
@@ -34,7 +34,7 @@
               v-model="form.email"
               placeholder="example@domain.com"
               id="email"
-              class="w-full bg-gray-800 border border-cyan-500 text-white px-4 py-2 rounded focus:outline-none focus:ring-2 focus:ring-cyan-500"
+              class="w-full bg-gray-800 border border-cyan-500  px-4 py-2 rounded focus:outline-none focus:ring-2 focus:ring-cyan-500"
               autocomplete="username"
             />
             <p v-if="message.email" class="mt-1 text-sm text-red-500">{{ message.email[0] }}</p>
@@ -48,7 +48,7 @@
               v-model="form.phone"
               placeholder="Phone Number"
               id="phone"
-              class="w-full bg-gray-800 border border-cyan-500 text-white px-4 py-2 rounded focus:outline-none focus:ring-2 focus:ring-cyan-500"
+              class="w-full bg-gray-800 border border-cyan-500  px-4 py-2 rounded focus:outline-none focus:ring-2 focus:ring-cyan-500"
             />
             <p v-if="message.phone" class="mt-1 text-sm text-red-500">{{ message.phone[0] }}</p>
           </div>
@@ -61,7 +61,7 @@
               v-model="form.password"
               placeholder="Password"
               id="password"
-              class="w-full bg-gray-800 border border-cyan-500 text-white px-4 py-2 rounded focus:outline-none focus:ring-2 focus:ring-cyan-500"
+              class="w-full bg-gray-800 border border-cyan-500  px-4 py-2 rounded focus:outline-none focus:ring-2 focus:ring-cyan-500"
               autocomplete="current-password"
             />
             <p v-if="message.password" class="mt-1 text-sm text-red-500">{{ message.password[0] }}</p>
@@ -72,7 +72,7 @@
         <div class="text-right">
           <button
             type="submit"
-            class="bg-cyan-500 hover:bg-cyan-600 text-white font-medium py-2 px-6 rounded transition duration-150"
+            class="bg-cyan-500 hover:bg-cyan-600  font-medium py-2 px-6 rounded transition duration-150"
           >
             Create
           </button>

@@ -1,5 +1,5 @@
 <template>
-  <div class="flex items-center justify-center min-h-screen">
+  <div class="flex items-center justify-center min-h-screen select-none">
     <div class="bg-gray-900 shadow-lg rounded-lg w-[400px] p-6">
       <form class="space-y-6">
         <div class="text-center">
@@ -13,7 +13,7 @@
             type="text"
             id="email"
             placeholder="email"
-            class="mt-1 block w-full bg-gray-800 text-white border border-gray-700 rounded-md px-3 py-2 placeholder-cyan-600 focus:outline-none focus:ring-2 focus:ring-cyan-500"
+            class="mt-1 block w-full bg-gray-800  border border-gray-700 rounded-md px-3 py-2 placeholder-cyan-600 focus:outline-none focus:ring-2 focus:ring-cyan-500"
           />
         </div>
 
@@ -23,14 +23,14 @@
             type="password"
             id="password"
             placeholder="Password"
-            class="mt-1 block w-full bg-gray-800 text-white border border-gray-700 rounded-md px-3 py-2 placeholder-cyan-600 focus:outline-none focus:ring-2 focus:ring-cyan-500"
+            class="mt-1 block w-full bg-gray-800  border border-gray-700 rounded-md px-3 py-2 placeholder-cyan-600 focus:outline-none focus:ring-2 focus:ring-cyan-500"
           />
         </div>
 
         <div>
           <button
             type="submit"
-            class="w-full bg-cyan-600 text-white py-2 px-4 rounded-md hover:bg-cyan-700 focus:outline-none focus:ring-2 focus:ring-cyan-400"
+            class="w-full bg-cyan-600  py-2 px-4 rounded-md hover:bg-cyan-700 focus:outline-none focus:ring-2 focus:ring-cyan-400"
           >
             Log In
           </button>

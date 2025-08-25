@@ -1,15 +1,63 @@
 <template>
-    <!-- <div class="p-4">
-        <router-link to="/user-create" class="py-2 px-2 bg-blue-500 rounded">Create User</router-link>
-    </div> -->
-    <layout>
-        <div>
-            HELLO FROM HOME
-        </div>
-    </layout>
+  <layout>
+    <div class="py-4 px-4">
+      <div class="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <UserCard 
+          v-for="(user, index) in data" 
+          :key="index" 
+          :data="user" 
+        />
+      </div>
+    </div>
+  </layout>
 </template>
 
+
+
 <script setup>
+import UserCard from './component/UserCard.vue'
+    const data = ref([
+        {
+            name : 'Mg Mg',
+            phone : '0978654321',
+            plan : '25K Plan'
+        },
+        {
+            name : 'Mg Mg',
+            phone : '0978654321',
+            plan : '25K Plan'
+        },
+        {
+            name : 'Mg Mg',
+            phone : '0978654321',
+            plan : '25K Plan'
+        },
+        {
+            name : 'Mg Mg',
+            phone : '0978654321',
+            plan : '25K Plan'
+        },
+        {
+            name : 'Mg Mg',
+            phone : '0978654321',
+            plan : '25K Plan'
+        },
+        {
+            name : 'Mg Mg',
+            phone : '0978654321',
+            plan : '25K Plan'
+        },
+        {
+            name : 'Mg Mg',
+            phone : '0978654321',
+            plan : '25K Plan'
+        },
+        {
+            name : 'Mg Mg',
+            phone : '0978654321',
+            plan : '25K Plan'
+        },
+    ])
     import layout from '@/Layouts/layout.vue';
     import {
         useRoute
