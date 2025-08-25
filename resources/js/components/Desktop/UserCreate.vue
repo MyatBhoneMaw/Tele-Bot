@@ -1,66 +1,87 @@
 <template>
-    <layout>
-        <div class="">
-            <div class="flex justify-center mt-4">
-                <div class="bg-blue-200 py-2 text-center rounded-md px-30">
-                    <h1 class="text-cyan-600 text-lg animate-fade-in-up select-none">
-                        {{ success ? success : 'Create User' }}
-                    </h1>
-                </div>
-            </div>
-            <div class="mt-10"> 
-                <form @submit.prevent="userCreate">
-                <div class="flex justify-center">
-                    <div class="">
-                        <div class="flex justify-between">
-                            <div class="px-10">
-                                <div class="py-2">
-                                    <label for="name"  class="text-cyan-200 animate-fade-in-up select-none">Name :</label>
-                                </div>
-                                <input type="text" v-model="form.name" placeholder="Name" id="name"
-                                    class="border outline-0 py-2 px-3 border-cyan-500  focus:border-cyan-900 rounded">
-                                <pre v-if="message.name" class="mt-2 text-sm text-red-500">{{ message . name[0] }}</pre>
-                            </div>
-                            <div class="px-2">
-                                <div class="py-2">
-                                    <label for="email" class="text-cyan-200 animate-fade-in-up select-none">Email :</label>
-                                </div>
-                                <input type="text" placeholder="Email" v-model="form.email" id="email" autocomplete="username"
-                                    class="border outline-0 py-2 px-3 border-cyan-500 rounded  focus:border-cyan-900">
-                                <pre v-if="message.email" class="mt-2 text-sm text-red-500">{{ message . email[0] }}</pre>
-                            </div>
-                        </div>
+  <layout>
+    <div class="min-h-screen text-white flex flex-col items-center py-10 px-4">
+      
+      <!-- Title Card -->
+      <div class="w-full max-w-xl bg-cyan-950 text-center py-4 rounded shadow-md">
+        <h1 class="text-2xl font-semibold text-cyan-400 animate-fade-in-up select-none">
+          {{ success ? success : 'Create User' }}
+        </h1>
+      </div>
 
-                        <div class="flex justify-between mt-4">
-                            <div class="px-10">
-                                <div class="py-2">
-                                    <label for="phone" class="text-cyan-200 animate-fade-in-up select-none">Phone :</label>
-                                </div>
-                                <input type="text" placeholder="Phone Number" v-model="form.phone" id="phone"
-                                    class="border outline-0 py-2 px-3  focus:border-cyan-900 border-cyan-500 rounded">
-                                <pre v-if="message.phone" class="mt-2 text-sm text-red-500">{{ message . phone[0] }}</pre>
-                            </div>
-                            <div class="">
-                                <div class="py-2">
-                                    <label for="current-password" class="text-cyan-200 animate-fade-in-up">Password :</label>
-                                </div>
-                                <input type="password" placeholder="Password" v-model="form.password" id="current-password" autocomplete="current-password"
-                                    class="border outline-0 py-2 px-3  focus:border-cyan-900 border-cyan-500 rounded">
-                                <pre v-if="message.password" class="mt-2 text-sm text-red-500">{{ message . password[0] }}</pre>
-                            </div>
-                        </div>
-                        <div class="py-5 flex float-end">
-                            <button class="bg-cyan-200 py-2 px-6 rounded text-cyan-600 hover:bg-cyan-100"
-                                type="submit">Create</button>
-                        </div>
-                    </div>
-                </div>
-            </form>
-            </div>
-            
+      <!-- Form Section -->
+      <form @submit.prevent="userCreate" class="w-full max-w-3xl mt-10 bg-gray-900 p-8 rounded-lg shadow-lg space-y-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          
+          <!-- Name -->
+          <div>
+            <label for="name" class="block text-sm font-medium text-cyan-300 mb-1">Name</label>
+            <input
+              type="text"
+              v-model="form.name"
+              placeholder="Full Name"
+              id="name"
+              class="w-full bg-gray-800 border border-cyan-500 text-white px-4 py-2 rounded focus:outline-none focus:ring-2 focus:ring-cyan-500"
+            />
+            <p v-if="message.name" class="mt-1 text-sm text-red-500">{{ message.name[0] }}</p>
+          </div>
+
+          <!-- Email -->
+          <div>
+            <label for="email" class="block text-sm font-medium text-cyan-300 mb-1">Email</label>
+            <input
+              type="email"
+              v-model="form.email"
+              placeholder="example@domain.com"
+              id="email"
+              class="w-full bg-gray-800 border border-cyan-500 text-white px-4 py-2 rounded focus:outline-none focus:ring-2 focus:ring-cyan-500"
+              autocomplete="username"
+            />
+            <p v-if="message.email" class="mt-1 text-sm text-red-500">{{ message.email[0] }}</p>
+          </div>
+
+          <!-- Phone -->
+          <div>
+            <label for="phone" class="block text-sm font-medium text-cyan-300 mb-1">Phone</label>
+            <input
+              type="text"
+              v-model="form.phone"
+              placeholder="Phone Number"
+              id="phone"
+              class="w-full bg-gray-800 border border-cyan-500 text-white px-4 py-2 rounded focus:outline-none focus:ring-2 focus:ring-cyan-500"
+            />
+            <p v-if="message.phone" class="mt-1 text-sm text-red-500">{{ message.phone[0] }}</p>
+          </div>
+
+          <!-- Password -->
+          <div>
+            <label for="password" class="block text-sm font-medium text-cyan-300 mb-1">Password</label>
+            <input
+              type="password"
+              v-model="form.password"
+              placeholder="Password"
+              id="password"
+              class="w-full bg-gray-800 border border-cyan-500 text-white px-4 py-2 rounded focus:outline-none focus:ring-2 focus:ring-cyan-500"
+              autocomplete="current-password"
+            />
+            <p v-if="message.password" class="mt-1 text-sm text-red-500">{{ message.password[0] }}</p>
+          </div>
         </div>
-    </layout>
+
+        <!-- Submit Button -->
+        <div class="text-right">
+          <button
+            type="submit"
+            class="bg-cyan-500 hover:bg-cyan-600 text-white font-medium py-2 px-6 rounded transition duration-150"
+          >
+            Create
+          </button>
+        </div>
+      </form>
+    </div>
+  </layout>
 </template>
+
 
 <script setup>
     import layout from '@/Layouts/layout.vue';
@@ -93,6 +114,7 @@
             if (data) {
                 success.value = 'Successfully Created User';
             }
+            router.push('/');
         } catch (error) {
             if (error.response) {
                 message.value.name = error.response.data.errors?.name

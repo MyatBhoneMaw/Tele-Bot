@@ -1,5 +1,5 @@
 <template>
-  <div class="flex items-center justify-center min-h-screen bg-black">
+  <div class="flex items-center justify-center min-h-screen">
     <div class="bg-gray-900 shadow-lg rounded-lg w-[400px] p-6">
       <form class="space-y-6">
         <div class="text-center">
