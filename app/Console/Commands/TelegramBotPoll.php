@@ -2,8 +2,9 @@
 
 namespace App\Console\Commands;
 
+use App\Models\User;
+use App\Models\Purchase;
 use Illuminate\Console\Command;
-use Ramsey\Uuid\Type\Integer;
 use Telegram\Bot\Api;
 use Telegram\Bot\Keyboard\Keyboard;
 
@@ -12,25 +13,14 @@ class TelegramBotPoll extends Command
     protected $signature = 'telegram:poll';
     protected $description = 'Run Telegram Bot with Long Polling';
 
-    /**
-    * /start ကိုပေးလာလျှင်
-    *handleStart() function ဖြင့် ပြန်လည်ဖြေကြားတယ်။
-    *Number (ဖုန်းနံပါတ်) ပေးလာလျှင်
-    *"ဖုန်းနံပါတ် စစ်ဆေးနေသည်..." ဟု message တစ်ခုပေးတယ်။
-    *ဖုန်းနံပါတ်သည် ATOM (097########) format ဖြစ်/မဖြစ် စစ်တယ်။
-    *မှန်ကန်ပါက 15K / 25K Plan button များ ပြပေးတယ်။
-    *မှားယွင်းပါက ဖုန်းနံပါတ် မှားကြောင်း ပြောပြတယ်။
-    *တခြားစာသားများ ပေးလာလျှင်
-    *"ဖုန်းနံပါတ်ပေးပါ" ဟု ပြန်ပြောတယ်။
-    *User က Button တစ်ခုကိုနှိပ်လျှင်
-    *handleCallbackQuery() ဖြင့် ဆက်လက် လုပ်တယ်။
-     */
+    protected $tempPhones = [];
+
     public function handle()
     {
         $telegram = new Api();
         $offset = 0;
 
-        $this->info('Bot polling started...');
+        $this->info('🤖 Bot polling started...');
 
         while (true) {
             $updates = $telegram->getUpdates([
@@ -44,36 +34,42 @@ class TelegramBotPoll extends Command
                 if (isset($update['message']['text'])) {
                     $chatId = $update['message']['chat']['id'];
                     $text = $update['message']['text'];
+                    $username = $update['message']['chat']['username'] ?? null;
 
                     if ($text === '/start') {
                         $this->handleStart($chatId, $telegram);
+                    } elseif (preg_match('/^(097|၀၉၇)\d{8}$/u', $text)) {
+                        // Save user (if not exists)
+                        User::updateOrCreate(
+                            ['chat_id' => $chatId],
+                            ['user_name' => $username]
+                        );
+
+                        // Temporarily store phone number
+                        $this->tempPhones[$chatId] = $text;
+
+                        // Ask for plan selection
+                        $keyboard = Keyboard::make()
+                            ->inline()
+                            ->row([
+                                Keyboard::inlineButton(['text' => '15K Plan', 'callback_data' => '15K Plan']),
+                                Keyboard::inlineButton(['text' => '25K Plan', 'callback_data' => '25K Plan']),
+                            ]);
+
+                        $telegram->sendMessage([
+                            'chat_id' => $chatId,
+                            'text' => '📦 မိတ်ဆွေ အသုံးပြုလိုသော package ကို ရွေးပါ။',
+                            'reply_markup' => $keyboard,
+                        ]);
                     } elseif (ctype_digit($text)) {
                         $telegram->sendMessage([
                             'chat_id' => $chatId,
-                            'text' => 'မိတ်ဆွေ ဖုန်းနံပါတ်အား စစ်ဆေးနေပါသည်.....',
+                            'text' => '❌ ဖုန်းနံပါတ်သည် ATOM format မဟုတ်ပါ။ ဥပမာ - 097XXXXXXXX',
                         ]);
-                        sleep(2);
-
-                        if (preg_match('/^(097|၀၉၇)\d{8}$/u', $text)) {
-                            $keyboard = Keyboard::make()
-                                ->inline()
-                                ->row([Keyboard::inlineButton(['text' => '15K Plan', 'callback_data' => '15K Plan']), Keyboard::inlineButton(['text' => '25K Plan', 'callback_data' => '25K Plan'])]);
-
-                            $telegram->sendMessage([
-                                'chat_id' => $chatId,
-                                'text' => 'မိတ်ဆွေအသုံးပြုလိုသော package ကို ရွေးပါ။',
-                                'reply_markup' => $keyboard,
-                            ]);
-                        } else {
-                            $telegram->sendMessage([
-                                'chat_id' => $chatId,
-                                'text' => 'မိတ်ဆွေဖုန်းနံပါတ်သည် ATOM ဖုန်းနံပါတ်မဟုတ်ပါ။ ဥပမာ - 097##########',
-                            ]);
-                        }
                     } else {
                         $telegram->sendMessage([
                             'chat_id' => $chatId,
-                            'text' => 'မိတ်ဆွေ၏ ATOM ဖုန်းနံပါတ်အား Package ဝယ်ယူရန်အတွက် ပို့ပါ။',
+                            'text' => '📱 မိတ်ဆွေရဲ့ ATOM ဖုန်းနံပါတ် (ဥပမာ - 097XXXXXXXX) ကို ပေးပို့ပါ။',
                         ]);
                     }
                 }
@@ -91,7 +87,7 @@ class TelegramBotPoll extends Command
     {
         $telegram->sendMessage([
             'chat_id' => $chatId,
-            'text' => 'မိတ်ဆွေဖုန်းအတွက် 15K Plan သို့မဟုတ် 25K Plan ဝယ်ယူအသုံးပြုလိုပါလား။ အသုံးပြုလိုပါက မိတ်ဆွေရဲ့ ATOM ဖုန်းနံပါတ် (ဥပမာ - 097##########) ကို ပေးပို့ပါ။',
+            'text' => "မင်္ဂလာပါ။\n\n📱 မိတ်ဆွေရဲ့ ATOM ဖုန်းနံပါတ် (ဥပမာ - 097XXXXXXXX) ကို ပေးပို့ပါ။",
         ]);
     }
 
@@ -100,12 +96,27 @@ class TelegramBotPoll extends Command
         $chatId = $update['callback_query']['message']['chat']['id'];
         $data = $update['callback_query']['data'];
 
-        $this->info('User selected: ' . $data);
+        $phone = $this->tempPhones[$chatId] ?? null;
+
+        if (!$phone) {
+            $telegram->sendMessage([
+                'chat_id' => $chatId,
+                'text' => '❗ ပထမဦးဆုံး ဖုန်းနံပါတ်ပေးရန် လိုအပ်သည်။',
+            ]);
+            return;
+        }
+
+        Purchase::create([
+            'chat_id' => $chatId,
+            'user_phone' => $phone,
+            'selected_plan' => $data,
+            'payment_status' => 'pending'
+        ]);
 
         $responseText = match ($data) {
-            '15K Plan' => 'မိတ်ဆွေ 15K Plan ကို ရွေးချယ်ခဲ့ပါသည်။',
-            '25K Plan' => 'မိတ်ဆွေ 25K Plan ကို ရွေးချယ်ခဲ့ပါသည်။',
-            default => 'တစ်ခုကို ရွေးချယ်ပါ။',
+            '15K Plan' => '✅ မိတ်ဆွေ 15K Plan ကို ရွေးချယ်ခဲ့ပါသည်။',
+            '25K Plan' => '✅ မိတ်ဆွေ 25K Plan ကို ရွေးချယ်ခဲ့ပါသည်။',
+            default => '❌ မမှန်သော Plan တစ်ခု ရွေးချယ်ထားသည်။',
         };
 
         $telegram->sendMessage([
@@ -117,62 +128,9 @@ class TelegramBotPoll extends Command
 
         $telegram->sendMessage([
             'chat_id' => $chatId,
-            'text' => 'ငွေပေးချေမှု အတည်ပြုပါ။',
+            'text' => '💳 ငွေပေးချေမှုအတွက် ဆက်လက်လုပ်ဆောင်ပါ။',
         ]);
+
+        $this->info("💾 New purchase saved for chat_id $chatId with plan $data");
     }
-
-    // private function sendInvalidPrompt($chatId, $telegram)
-    // {
-    //     $telegram->sendMessage([
-    //         'chat_id' => $chatId,
-    //         'text' => 'ကျေးဇူးပြု၍ ATOM ဖုန်းနံပါတ် (097##########) ကိုသာ ထည့်ပါ။',
-    //     ]);
-    // }
-
-    //  private function isValidPhoneNumber($text): bool
-    // {
-    //     if (!ctype_digit($text)) {
-    //         return false;
-    //     }
-
-    //     return preg_match('/^(097|၀၉၇)\d{8}$/u', $text);
-    // }
-
-    // private function handlePhoneNumber($text, $chatId, $telegram)
-    // {
-    //     $telegram->sendMessage([
-    //         'chat_id' => $chatId,
-    //         'text' => 'သင့်ဖုန်းနံပါတ်အား စစ်ဆေးနေပါသည်...',
-    //     ]);
-
-    //     sleep(1);
-
-    //     if (!preg_match('/^(097|၀၉၇)\d{8}$/u', $text)) {
-    //         $telegram->sendMessage([
-    //             'chat_id' => $chatId,
-    //             'text' => 'မိတ်ဆွေဖုန်းနံပါတ်သည် ATOM ဖုန်းနံပါတ်မဟုတ်ပါ။ ဥပမာ - 097##########',
-    //         ]);
-    //         return;
-    //     }
-
-    //     if (strlen($text) !== 11) {
-    //         $telegram->sendMessage([
-    //             'chat_id' => $chatId,
-    //             'text' => 'ဖုန်းနံပါတ်သည် 11 လုံး (09 အပါအဝင်) ဖြစ်ရပါမည်။',
-    //         ]);
-    //         return;
-    //     }
-
-    //     // info('Valid phone: ' . $text);
-
-    //     $keyboard = Keyboard::make()
-    //         ->inline()
-    //         ->row([Keyboard::inlineButton(['text' => '15K Plan', 'callback_data' => '15K Plan']), Keyboard::inlineButton(['text' => '25K Plan', 'callback_data' => '25K Plan'])]);
-
-    //     $telegram->sendMessage([
-    //         'chat_id' => $chatId,
-    //         'text' => 'မိတ်ဆွေအသုံးပြုလိုသော package ကို ရွေးပါ။',
-    //         'reply_markup' => $keyboard,
-    //     ]);
-    // }
 }
