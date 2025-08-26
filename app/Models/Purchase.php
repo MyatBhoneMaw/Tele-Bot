@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\PaymentStatus;
 use Illuminate\Database\Eloquent\Model;
 
 class Purchase extends Model
@@ -10,7 +11,12 @@ class Purchase extends Model
         'chat_id',
         'user_name',
         'user_phone',
-        'selected_plan'
+        'selected_plan',
+        'payment_status'
+    ];
+
+      protected $casts = [
+        'payment_status' => PaymentStatus::class,
     ];
 
     public function user()

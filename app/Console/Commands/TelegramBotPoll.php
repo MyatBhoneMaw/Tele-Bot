@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Models\User;
 use App\Models\Purchase;
+use App\Enums\PaymentStatus;
 use Illuminate\Console\Command;
 use Telegram\Bot\Api;
 use Telegram\Bot\Keyboard\Keyboard;
@@ -20,7 +21,7 @@ class TelegramBotPoll extends Command
         $telegram = new Api();
         $offset = 0;
 
-        $this->info('🤖 Bot polling started...');
+        $this->info('Bot polling started...');
 
         while (true) {
             $updates = $telegram->getUpdates([
@@ -64,7 +65,7 @@ class TelegramBotPoll extends Command
                     } elseif (ctype_digit($text)) {
                         $telegram->sendMessage([
                             'chat_id' => $chatId,
-                            'text' => '❌ ဖုန်းနံပါတ်သည် ATOM format မဟုတ်ပါ။ ဥပမာ - 097XXXXXXXX',
+                            'text' => '🙅‍♀️ ဖုန်းနံပါတ်သည် ATOM နံပါတ် မဟုတ်ပါ။ ဥပမာ - 097XXXXXXXX',
                         ]);
                     } else {
                         $telegram->sendMessage([
@@ -101,7 +102,7 @@ class TelegramBotPoll extends Command
         if (!$phone) {
             $telegram->sendMessage([
                 'chat_id' => $chatId,
-                'text' => '❗ ပထမဦးဆုံး ဖုန်းနံပါတ်ပေးရန် လိုအပ်သည်။',
+                'text' => '💁‍♀️ ပထမဦးဆုံး ဖုန်းနံပါတ်ပေးရန် လိုအပ်သည်။',
             ]);
             return;
         }
@@ -110,13 +111,13 @@ class TelegramBotPoll extends Command
             'chat_id' => $chatId,
             'user_phone' => $phone,
             'selected_plan' => $data,
-            'payment_status' => 'pending'
+            'payment_status' => PaymentStatus::PENDING
         ]);
 
         $responseText = match ($data) {
             '15K Plan' => '✅ မိတ်ဆွေ 15K Plan ကို ရွေးချယ်ခဲ့ပါသည်။',
             '25K Plan' => '✅ မိတ်ဆွေ 25K Plan ကို ရွေးချယ်ခဲ့ပါသည်။',
-            default => '❌ မမှန်သော Plan တစ်ခု ရွေးချယ်ထားသည်။',
+            default => '🤦‍♀️ မမှန်သော Plan တစ်ခု ရွေးချယ်ထားသည်။',
         };
 
         $telegram->sendMessage([
@@ -131,6 +132,6 @@ class TelegramBotPoll extends Command
             'text' => '💳 ငွေပေးချေမှုအတွက် ဆက်လက်လုပ်ဆောင်ပါ။',
         ]);
 
-        $this->info("💾 New purchase saved for chat_id $chatId with plan $data");
+        $this->info("New Purchase saved for chat_id $chatId with plan $data");
     }
 }
