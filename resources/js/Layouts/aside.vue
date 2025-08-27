@@ -39,10 +39,8 @@
 
     const active = ref('')
 
-    // vue-router မှ current route ကိုရယူ
     const route = useRoute()
 
-    // လက်ရှိ route path အပေါ်မူတည်ပြီး active tab ကိုပြောင်း
     watchEffect(() => {
         const matched = data.value.find((item) => item.path == route.path)
         if (matched) {
