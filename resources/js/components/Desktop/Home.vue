@@ -1,9 +1,10 @@
 <template>
   <layout>
     <div class="py-4 px-4">
+        <!-- {{ users }} -->
       <div class="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <UserCard 
-          v-for="(user, index) in data" 
+          v-for="(user, index) in users" 
           :key="index" 
           :data="user" 
         />
@@ -15,68 +16,25 @@
 
 
 <script setup>
-import UserCard from './component/UserCard.vue'
-    const data = ref([
-        {
-            name : 'Mg Mg',
-            phone : '0978654321',
-            plan : '25K Plan'
-        },
-        {
-            name : 'Mg Mg',
-            phone : '0978654321',
-            plan : '25K Plan'
-        },
-        {
-            name : 'Mg Mg',
-            phone : '0978654321',
-            plan : '25K Plan'
-        },
-        {
-            name : 'Mg Mg',
-            phone : '0978654321',
-            plan : '25K Plan'
-        },
-        {
-            name : 'Mg Mg',
-            phone : '0978654321',
-            plan : '25K Plan'
-        },
-        {
-            name : 'Mg Mg',
-            phone : '0978654321',
-            plan : '25K Plan'
-        },
-        {
-            name : 'Mg Mg',
-            phone : '0978654321',
-            plan : '25K Plan'
-        },
-        {
-            name : 'Mg Mg',
-            phone : '0978654321',
-            plan : '25K Plan'
-        },
-    ])
-    import layout from '@/Layouts/layout.vue';
-    import {
-        useRoute
-    } from 'vue-router';
-    import {
-        ref,
-        onMounted
-    } from 'vue';
+import { ref } from 'vue';
+import UserCard from './component/UserCard.vue';
+import { get } from '@/utils/api';
+import layout from '@/Layouts/layout.vue';
 
-    const route = useRoute();
-    const success = ref('');
-
-    onMounted(() => {
-        success.value = route.query.success || '';
-
-        if (success.value) {
-            setTimeout(() => {
-                success.value = '';
-            }, 3000);
+const users = ref([]);
+const getBuyUser = async () => {
+    try {
+    const data = await get('/users');
+    if(data) {
+        users.value = data.data;
+    }
+    }
+     catch (error) {
+        if(error.response){
+            console.log(error.response);
         }
-    });
+    }
+}
+
+getBuyUser();
 </script>

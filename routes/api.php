@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('/login' , [AuthController::class, 'login']);
 Route::post('/create-user', [UserController::class, 'createUser']);
+Route::get('/users', [UserController::class, 'packageBuyUser']);
 Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
