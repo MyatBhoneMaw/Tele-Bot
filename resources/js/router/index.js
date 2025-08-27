@@ -3,7 +3,8 @@ import { createRouter, createWebHistory } from 'vue-router';
 import Home from '@/pages/home.vue';
 import Login from '@/pages/login.vue';
 import Create from '@/pages/create.vue'
-import UserCardDetail from '../components/Desktop/UserCardDetail.vue';
+import UserCardDetail from '../pages/userCardDetail.vue';
+import UserProfile from '../pages/userProfile.vue';
 
 const routes = [
   {
@@ -25,6 +26,11 @@ const routes = [
     path : '/user/:id',
     name : 'UserCardDetail',
     component : UserCardDetail
+  },
+  {
+    path : '/user-profile',
+    name : 'UserProfile',
+    component : UserProfile
   }
 ];
 

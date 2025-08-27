@@ -1,9 +1,9 @@
 <template>
-    <layout>
+    <!-- <layout> -->
         <div>
             hello useer : id = > {{ userId }}
      </div>
-    </layout>
+    <!-- </layout> -->
 </template>
 
 <script setup>
