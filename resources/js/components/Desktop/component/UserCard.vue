@@ -17,7 +17,7 @@
                     <span class="font-semibold text-cyan-400">Plan :</span>
                     <span class="text-cyan-200 px-3"> {{ data . plan }} </span>
                 </div>
-                <div class="flex float-end">
+                <div class="flex float-end pt-3">
                     <div class="px-3">
                         <router-link :to="`/user/${data.id}`"
                             class="bg-red-600 px-3 py-1 rounded hover:bg-red-800 hover:text-white">Reject</router-link>

@@ -1,21 +1,54 @@
 <template>
     <layout>
-        <div class="bg-black text-cyan-400 min-h-screen flex items-center justify-center">
-            <div class="bg-gray-900 p-6 rounded-lg shadow-lg w-full max-w-md text-center">
-                <img class="w-24 h-24 rounded-full mx-auto border-4 border-cyan-400" :src="avatar"
-                    alt="User Avatar" />
-                <h2 class="text-2xl font-bold mt-4">{{ name }}</h2>
-                <p class="text-cyan-300">{{ jobTitle }}</p>
-
-                <div class="mt-4 text-sm text-cyan-200 space-y-1">
-                    <p><strong>📞 Phone:</strong> {{ phone }}</p>
-                    <p><strong>📧 Email:</strong> {{ email }}</p>
+        <div class="flex items-center min-h-screen">
+            <div class="mx-10 text-cyan-400 overflow-hidden shadow-xl rounded-xl border border-cyan-700">
+                <div class="px-6 py-6 bg-gray-900 border-b border-cyan-700 rounded-t-xl">
+                    <h3 class="text-xl font-semibold text-cyan-300">
+                        User Profile
+                    </h3>
+                    <p class="mt-1 text-sm text-cyan-500">
+                        This is some information about the user.
+                    </p>
                 </div>
-
-                <button class="mt-6 bg-cyan-500 hover:bg-cyan-600 text-black font-semibold py-2 px-4 rounded">
-                    Follow
-                </button>
+                <div class="px-6 py-5">
+                    <dl class="divide-y divide-cyan-800">
+                        <div class="py-4 grid grid-cols-3 gap-4">
+                            <dt class="text-sm font-medium text-cyan-500">
+                                Full name
+                            </dt>
+                            <dd class="text-sm text-cyan-200 col-span-2">
+                                John Doe
+                            </dd>
+                        </div>
+                        <div class="py-4 grid grid-cols-3 gap-4">
+                            <dt class="text-sm font-medium text-cyan-500">
+                                Email address
+                            </dt>
+                            <dd class="text-sm text-cyan-200 col-span-2">
+                                johndoe@example.com
+                            </dd>
+                        </div>
+                        <div class="py-4 grid grid-cols-3 gap-4">
+                            <dt class="text-sm font-medium text-cyan-500">
+                                Phone number
+                            </dt>
+                            <dd class="text-sm text-cyan-200 col-span-2">
+                                (123) 456-7890
+                            </dd>
+                        </div>
+                        <div class="py-4 grid grid-cols-3 gap-4">
+                            <dt class="text-sm font-medium text-cyan-500">
+                                Address
+                            </dt>
+                            <dd class="text-sm text-cyan-200 col-span-2">
+                                123 Main St<br>
+                                Anytown, USA 12345
+                            </dd>
+                        </div>
+                    </dl>
+                </div>
             </div>
+
         </div>
     </layout>
 
