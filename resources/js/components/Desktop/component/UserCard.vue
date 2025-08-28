@@ -5,20 +5,27 @@
 
                 <div>
                     <span class="font-semibold text-cyan-400">User Name :</span>
-                    <span class="text-cyan-200 px-3"> {{ data.user_name }} </span>
+                    <span class="text-cyan-200 px-3"> {{ data . user_name }} </span>
                 </div>
 
                 <div>
                     <span class="font-semibold text-cyan-400">Phone :</span>
-                    <span class="text-cyan-200 px-3"> {{ data.phone }} </span>
+                    <span class="text-cyan-200 px-3"> {{ data . phone }} </span>
                 </div>
 
                 <div>
                     <span class="font-semibold text-cyan-400">Plan :</span>
-                    <span class="text-cyan-200 px-3"> {{ data.plan }} </span>
+                    <span class="text-cyan-200 px-3"> {{ data . plan }} </span>
                 </div>
                 <div class="flex float-end">
-                  <router-link :to="`/user/${data.id}`" class="bg-purple-600 px-3 py-2 rounded hover:bg-purple-800 hover:text-white">Detail</router-link>
+                    <div class="px-3">
+                        <router-link :to="`/user/${data.id}`"
+                            class="bg-red-600 px-3 py-1 rounded hover:bg-red-800 hover:text-white">Reject</router-link>
+                    </div>
+                    <div>
+                        <router-link :to="`/user/${data.id}`"
+                            class="bg-green-600 px-3 py-1 rounded hover:bg-green-800 hover:text-white">Success</router-link>
+                    </div>
                 </div>
             </div>
         </div>

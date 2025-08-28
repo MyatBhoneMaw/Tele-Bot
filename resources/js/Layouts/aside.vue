@@ -25,15 +25,20 @@
             slug: 'home'
         },
         {
-            name: 'Profile',
-            path: '/user-profile',
-            slug: 'user-profile'
-        },
+            name: 'Plan',
+            path: '/plan',
+            slug: 'plan'
 
+        },
         {
             name: 'Create User',
             path: '/user-create',
             slug: 'user-create'
+        },
+        {
+            name: 'Profile',
+            path: '/user-profile',
+            slug: 'user-profile'
         },
     ])
 

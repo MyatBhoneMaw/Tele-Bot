@@ -5,6 +5,7 @@ import Login from '@/pages/login.vue';
 import Create from '@/pages/create.vue'
 import UserCardDetail from '../pages/userCardDetail.vue';
 import UserProfile from '../pages/userProfile.vue';
+import Plan from '../pages/plan.vue';
 
 const routes = [
   {
@@ -31,6 +32,11 @@ const routes = [
     path : '/user-profile',
     name : 'UserProfile',
     component : UserProfile
+  },
+  {
+    path : '/plan',
+    name : 'Plan',
+    component : Plan
   }
 ];
 
