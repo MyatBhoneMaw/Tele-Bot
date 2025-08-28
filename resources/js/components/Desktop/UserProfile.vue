@@ -1,6 +1,6 @@
 <template>
     <layout>
-        <div class="flex items-center min-h-screen">
+        <div class="mt-10">
             <div class="mx-10 text-cyan-400 overflow-hidden shadow-xl rounded-xl border border-cyan-700">
                 <div class="px-6 py-6 bg-gray-900 border-b border-cyan-700 rounded-t-xl">
                     <h3 class="text-xl font-semibold text-cyan-300">

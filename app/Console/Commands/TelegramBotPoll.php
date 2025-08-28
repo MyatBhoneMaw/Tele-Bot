@@ -40,16 +40,13 @@ class TelegramBotPoll extends Command
                     if ($text === '/start') {
                         $this->handleStart($chatId, $telegram);
                     } elseif (preg_match('/^(097|၀၉၇)\d{8}$/u', $text)) {
-                        // Save user (if not exists)
                         User::updateOrCreate(
                             ['chat_id' => $chatId],
                             ['user_name' => $username]
                         );
 
-                        // Temporarily store phone number
                         $this->tempPhones[$chatId] = $text;
 
-                        // Ask for plan selection
                         $keyboard = Keyboard::make()
                             ->inline()
                             ->row([
