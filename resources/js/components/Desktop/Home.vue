@@ -9,25 +9,5 @@
 
 
 <script setup>
-import { ref } from 'vue';
-import UserCard from './component/UserCard.vue';
-import { get } from '@/utils/api';
 import layout from '@/Layouts/layout.vue';
-
-const users = ref([]);
-const getBuyUser = async () => {
-    try {
-    const data = await get('/users');
-    if(data) {
-        users.value = data.data;
-    }
-    }
-     catch (error) {
-        if(error.response){
-            console.log(error.response);
-        }
-    }
-}
-
-getBuyUser();
 </script>
