@@ -1,9 +1,8 @@
 <template>
     <Layout>
         <div class="py-4 px-4">
-            <!-- {{ tabs }} -->
             <div class="max-w-5xl mx-auto">
-                <button v-for="tab in tabs" :key="tab.key" @click="tabChange(tab.key)"
+                <button v-for="tab in tabs" :key="tab.key" @click="tabChange(tab.key)" class="cursor-pointer"
                     :class="['px-4 py-2', active === tab.key ? 'bg-blue-500 text-white' : 'bg-gray-200 text-black']">
                     {{ tab . name }}
                 </button>
@@ -35,7 +34,7 @@ const tabs = ref([
 
 const getBuyUser = async () => {
   try {
-    const data = await get('/users', { plan: active.value }); // ✅ query param auto-handled
+    const data = await get('/users', { plan: active.value });
     if (data) {
       users.value = data.data;
     }
@@ -47,15 +46,13 @@ const getBuyUser = async () => {
 };
 
 const tabChange = (key) => {
-  active.value = key; // ✅ cleaner
+  active.value = key;
 };
 
-// Automatically fetch data whenever active tab changes
 watch(active, () => {
   if (active.value) getBuyUser();
 });
 
-// Set default active tab and trigger initial fetch
 onMounted(() => {
   active.value = '15K';
 });

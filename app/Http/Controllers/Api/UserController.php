@@ -46,10 +46,18 @@ class UserController extends Controller
         }
     }
 
-    public function packageBuyUser()
+    public function packageBuyUser(Request $request)
     {
         try {
-            $data = Purchase::query()->where('payment_status', PaymentStatus::PENDING)->get();
+            $plan = $request->input('plan');
+            $data = Purchase::query()
+            ->when($plan == '15K', function($q) {
+                $q->where('selected_plan', '15K Plan');
+            })
+            ->when($plan == '25K', function($q) {
+                $q->where('selected_plan', '25K Plan');
+            })
+            ->where('payment_status', PaymentStatus::PENDING)->get();
             return PurchaseResource::collection($data);
         } catch (Exception $e) {
             return response()->json(
