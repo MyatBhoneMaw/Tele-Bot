@@ -18,7 +18,6 @@
         useRoute
     } from 'vue-router'
 
-    // သတ်မှတ်ထားတဲ့ tab data
     const data = ref([{
             name: 'Home Page',
             path: '/',

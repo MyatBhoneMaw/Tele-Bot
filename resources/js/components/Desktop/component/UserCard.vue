@@ -19,11 +19,11 @@
                 </div>
                 <div class="flex float-end pt-3">
                     <div class="px-3">
-                        <router-link :to="`/user/${data.id}`"
+                        <router-link 
                             class="bg-red-600 px-3 py-1 rounded hover:bg-red-800 hover:text-white">Reject</router-link>
                     </div>
                     <div>
-                        <router-link :to="`/user/${data.id}`"
+                        <router-link 
                             class="bg-green-600 px-3 py-1 rounded hover:bg-green-800 hover:text-white">Success</router-link>
                     </div>
                 </div>
