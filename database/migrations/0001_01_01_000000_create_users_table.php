@@ -16,7 +16,8 @@ return new class extends Migration {
             $table->string('email')->unique()->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password')->nullable();
-            $table->bigInteger('chat_id')->unique();
+            $table->string('phone')->nullable();
+            $table->bigInteger('chat_id')->unique()->nullable();
             $table->string('user_name')->nullable();
             // $table->string('user_name')->nullable();
             // $table->string('chat_id')->nullable();

@@ -5,6 +5,7 @@ import Login from '@/pages/login.vue';
 import Create from '@/pages/create.vue'
 import UserProfile from '../pages/userProfile.vue';
 import Plan from '../pages/plan.vue';
+import Employee from '../pages/employee.vue';
 
 const routes = [
   {
@@ -31,6 +32,11 @@ const routes = [
     path : '/plan',
     name : 'Plan',
     component : Plan
+  },
+  {
+    path : '/employee',
+    name : 'Employee',
+    component : Employee
   }
 ];
 

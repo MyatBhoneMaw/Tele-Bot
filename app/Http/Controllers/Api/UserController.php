@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Enums\PaymentStatus;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UserRequest;
+use App\Http\Resources\EmployeeResource;
 use App\Http\Resources\PurchaseResource;
 use App\Models\Purchase;
 use App\Models\User;
@@ -18,6 +19,7 @@ class UserController extends Controller
 {
     public function createUser(UserRequest $request)
     {
+        // dd($request->all());
         try {
             $user = User::create([
                 'name' => $request->name,
@@ -38,7 +40,7 @@ class UserController extends Controller
 
             return response()->json(
                 [
-                    'error' => 'Something is wrong',
+                    'error' => $errorMessage,
                     'code' => $statusCode,
                 ],
                 $statusCode,
@@ -51,19 +53,38 @@ class UserController extends Controller
         try {
             $plan = $request->input('plan');
             $data = Purchase::query()
-            ->when($plan == '15K', function($q) {
-                $q->where('selected_plan', '15K Plan');
-            })
-            ->when($plan == '25K', function($q) {
-                $q->where('selected_plan', '25K Plan');
-            })
-            ->where('payment_status', PaymentStatus::PENDING)->get();
+                ->when($plan == '15K', function ($q) {
+                    $q->where('selected_plan', '15K Plan');
+                })
+                ->when($plan == '25K', function ($q) {
+                    $q->where('selected_plan', '25K Plan');
+                })
+                ->where('payment_status', PaymentStatus::PENDING)
+                ->get();
             return PurchaseResource::collection($data);
         } catch (Exception $e) {
             return response()->json(
                 [
                     'message' => 'Something is wrong',
                     'status' => 500,
+                ],
+                500,
+            );
+        }
+    }
+
+    public function getEmployee()
+    {
+        try {
+            $user = User::query()
+                ->whereNotNull(['name', 'email', 'phone'])
+                ->latest()
+                ->paginate(10);
+            return $user;
+        } catch (Exception $e) {
+            return response()->json(
+                [
+                    'message' => 'Something is wrong',
                 ],
                 500,
             );

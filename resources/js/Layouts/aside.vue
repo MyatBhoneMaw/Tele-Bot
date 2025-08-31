@@ -35,6 +35,11 @@
             slug: 'user-create'
         },
         {
+            name : 'Employee',
+            path : '/employee',
+            slug : 'employee'
+        },
+        {
             name: 'Profile',
             path: '/user-profile',
             slug: 'user-profile'

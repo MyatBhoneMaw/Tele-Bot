@@ -114,7 +114,7 @@
             if (data) {
                 success.value = 'Successfully Created User';
             }
-            router.push('/');
+            router.push('/employee');
         } catch (error) {
             if (error.response) {
                 message.value.name = error.response.data.errors?.name
