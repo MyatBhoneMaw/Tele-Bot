@@ -6,19 +6,21 @@ const API_BASE_URL = '/api'; // လိုအပ်ရင် .env file ထဲသ�
 // Axios instance
 const api = axios.create({
   baseURL: API_BASE_URL,
+  withCredentials: true, //  for Sanctum
   headers: {
-    'Accept': 'application/json',
+    Accept: 'application/json',
   },
-});
+})
 
-//Auth token ထည့်ဖို့
-api.interceptors.request.use(config => {
-  const token = localStorage.getItem('token'); // or use Vuex
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
-  }
-  return config;
-});
+
+//Auth token ထည့်ဖို့ // auth:sancutm ကို သုံးရင် bearer token rမလို
+// api.interceptors.request.use(config => {
+//   const token = localStorage.getItem('token'); // or use Vuex
+//   if (token) {
+//     config.headers.Authorization = `Bearer ${token}`;
+//   }
+//   return config;
+// });
 
 // ==========================
 //  CRUD API FUNCTIONS
