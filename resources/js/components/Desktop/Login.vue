@@ -46,7 +46,6 @@
         email: '',
         password: ''
     });
-    await get('/sanctum/csrf-cookie')
     const login = async () => {
         try {
             await post('/login', form.value);
