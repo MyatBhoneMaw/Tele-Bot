@@ -33,7 +33,7 @@
 
 <script setup>
     import {
-        ref
+        ref, onMounted
     } from 'vue';
     import {
         post
@@ -46,7 +46,6 @@
         email: '',
         password: ''
     });
-    await get('/sanctum/csrf-cookie')
     const login = async () => {
         try {
             await post('/login', form.value);
