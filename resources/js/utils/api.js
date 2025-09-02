@@ -1,41 +1,24 @@
 import axios from 'axios';
-import router from '../router'; // Vue router ကို import လုပ်ဖို့လိုတယ်
 
 // Laravel backend URL
-const API_BASE_URL = '/api'; // Optional: move to .env later
+const API_BASE_URL = '/api'; // လိုအပ်ရင် .env file ထဲသို့ ရွှေ့လို့ရအောင်
 
 // Axios instance
 const api = axios.create({
   baseURL: API_BASE_URL,
-  withCredentials: true, // for Sanctum (Laravel session-based auth)
   headers: {
-    Accept: 'application/json',
-    'X-Requested-With': 'XMLHttpRequest', // Required for Laravel CSRF protection
+    'Accept': 'application/json',
   },
 });
 
-
-api.interceptors.response.use(
-  response => response,
-  error => {
-    if (error.response && error.response.status === 401) {
-      localStorage.removeItem('user');
-      sessionStorage.clear();
-      router.push('/login');
-    }
-    return Promise.reject(error);
+//Auth token ထည့်ဖို့
+api.interceptors.request.use(config => {
+  const token = localStorage.getItem('token'); // or use Vuex
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
   }
-);
-
-
-//Auth token ထည့်ဖို့ // auth:sancutm ကို သုံးရင် bearer token rမလို
-// api.interceptors.request.use(config => {
-//   const token = localStorage.getItem('token'); // or use Vuex
-//   if (token) {
-//     config.headers.Authorization = `Bearer ${token}`;
-//   }
-//   return config;
-// });
+  return config;
+});
 
 // ==========================
 //  CRUD API FUNCTIONS
@@ -63,19 +46,6 @@ export const post = async (endpoint, data, fileFieldName = 'file') => {
 
   return response.data;
 };
-
-
-// post with login
-export const postJson = async (endpoint, data) => {
-  const response = await api.post(endpoint, data, {
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  });
-
-  return response.data;
-};
-
 
 //  Read (GET)
 export const get = async (endpoint, params = {}) => {

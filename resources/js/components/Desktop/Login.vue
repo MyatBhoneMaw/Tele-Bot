@@ -47,7 +47,7 @@
 
 <script setup>
 import { ref } from 'vue';
-import { postJson } from '../../utils/api';
+import { post } from '../../utils/api';
 import { useRouter } from 'vue-router';
 
 const router = useRouter();
@@ -60,7 +60,7 @@ const form = ref({
 const login = async () => {
   try {
     // await postJson('/sanctum/csrf-cookie');
-    const response = await postJson('/login', form.value);
+    const response = await post('/login', form.value);
   console.log('Login response:', response); // 🔍 Check what exactly came back
 
     // Safely check if user exists in response
