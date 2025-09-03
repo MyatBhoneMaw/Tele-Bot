@@ -1,5 +1,5 @@
 import axios from 'axios';
-
+import router from '../router';
 // Laravel backend URL
 const API_BASE_URL = '/api'; // လိုအပ်ရင် .env file ထဲသို့ ရွှေ့လို့ရအောင်
 
@@ -13,13 +13,28 @@ const api = axios.create({
 
 //Auth token ထည့်ဖို့
 api.interceptors.request.use(config => {
-  const token = localStorage.getItem('token'); // or use Vuex
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
+  const userStr = localStorage.getItem('user');
+  if (userStr) {
+    const user = JSON.parse(userStr);
+    if (user.token) {
+      config.headers.Authorization = `Bearer ${user.token}`;
+    }
   }
   return config;
 });
 
+
+//401 ဖြစ်ရင် login page ကို ပို့
+api.interceptors.response.use(
+  response => response,
+  error => {
+    if (error.response && error.response.status === 401) {
+      localStorage.removeItem('user');
+      router.push('/login');
+    }
+    return Promise.reject(error);
+  }
+);
 // ==========================
 //  CRUD API FUNCTIONS
 // ==========================

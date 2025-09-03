@@ -57,16 +57,11 @@
            
             const data = await post('/login', form.value);
 
-          
-            localStorage.setItem('token', data.token);
-            localStorage.setItem('name', data.name);
-            localStorage.setItem('email', data.email);
-            localStorage.setItem('phone', data.phone);
-            axios.defaults.headers.common['Authorization'] = `Bearer ${data.token}`;
-
-            console.log('token', localStorage.getItem('token'));
-
-            // router.push('/user-profile');
+            console.log('initial-data', data);
+            localStorage.setItem('user', JSON.stringify(data));
+            console.log('my-user',JSON.parse(localStorage.getItem('user')));
+        
+            router.push('/');
 
         } catch (error) {
             if (error.response) {

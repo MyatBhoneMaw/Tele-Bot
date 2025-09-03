@@ -1,11 +1,10 @@
 <template>
     <layout>
-        <pre>{{ user }}</pre>
         <div class="mt-10">
             <div class="mx-10 text-cyan-400 overflow-hidden shadow-xl rounded-xl border border-cyan-700">
                 <div class="px-6 py-6 bg-gray-900 border-b border-cyan-700 rounded-t-xl">
                     <h3 class="text-xl font-semibold text-cyan-300">
-                        {{ user.name }} Profile
+                         Profile
                     </h3>
                     <!-- <p class="mt-1 text-sm text-cyan-500">
                         This is some information about the user.
@@ -18,7 +17,7 @@
                                 Full name
                             </dt>
                             <dd class="text-sm text-cyan-200 col-span-2">
-                                {{ user.name }}
+                                MMSDE
                             </dd>
                         </div>
                         <div class="py-4 grid grid-cols-3 gap-4">
@@ -26,7 +25,7 @@
                                 Email address
                             </dt>
                             <dd class="text-sm text-cyan-200 col-span-2">
-                                {{  user.email }}
+                                some-email
                             </dd>
                         </div>
                         <div class="py-4 grid grid-cols-3 gap-4">
@@ -34,7 +33,7 @@
                                 Phone number
                             </dt>
                             <dd class="text-sm text-cyan-200 col-span-2">
-                                {{ user.phone }}
+                                some-phone
                             </dd>
                         </div>
                         <div class="py-4 grid grid-cols-3 gap-4">
@@ -42,8 +41,7 @@
                                 Address
                             </dt>
                             <dd class="text-sm text-cyan-200 col-span-2">
-                                123 Main St<br>
-                                Anytown, USA 12345
+                                some-address
                             </dd>
                         </div>
                     </dl>
@@ -57,8 +55,5 @@
 
 <script setup>
     import layout from '@/Layouts/layout.vue'
-    import get from '@/utils/api'
-    const { data : user } = await get('/user');
 
-    getUser();
 </script>

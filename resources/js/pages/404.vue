@@ -8,7 +8,7 @@
     <p class="text-cyan-300 text-xl mt-4">Not Found</p>
     <div class="mt-6">
       <router-link
-        to="/home"
+        to="/"
         class="text-cyan-400 hover:text-cyan-600 underline"
       >
         Go Back Home
