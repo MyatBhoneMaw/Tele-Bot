@@ -3,19 +3,27 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Container\Attributes\Log;
-use Illuminate\Http\Request;
-use Illuminate\Log\Logger;
+use App\Http\Requests\LoginUserRequest;
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
-    public function login(Request $request)
+    public function login(LoginUserRequest $request)
     {
-        $user = $request->validated([
-            'phone' => 'required|numeric',
-            'password' => 'required|min:6'
+       $user = User::where('email', $request->email)->first();
+        if(!$user || !Hash::check($request->password, $user->password)) {
+            return response()->json(['message' => 'Invalid credentials'], 401);
+        }
+
+        $token = $user->createToken('my-api-token')->plainTextToken;
+
+        return response()->json([
+            'name' => $user->name,
+            'email' => $user->email,
+            'phone' => $user->phone,
+            'token' => $token
         ]);
 
-        return $user;
     }
 }

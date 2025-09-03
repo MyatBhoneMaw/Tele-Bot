@@ -11,12 +11,14 @@
                     <label for="email" class="block text-sm font-medium text-gray-300">Email :</label>
                     <input type="text" id="email" placeholder="email" v-model="form.email"
                         class="mt-1 block w-full bg-gray-800  border border-gray-700 rounded-md px-3 py-2 placeholder-cyan-600 focus:outline-none focus:ring-2 focus:ring-cyan-500" />
+                    <p v-if="message.email" class="mt-2 text-sm text-red-500">{{ message . email[0] }}</p>
                 </div>
 
                 <div>
                     <label for="password" class="block text-sm font-medium text-gray-300">Password :</label>
                     <input type="password" id="password" placeholder="Password" v-model="form.password"
                         class="mt-1 block w-full bg-gray-800  border border-gray-700 rounded-md px-3 py-2 placeholder-cyan-600 focus:outline-none focus:ring-2 focus:ring-cyan-500" />
+                    <p v-if="message.password" class="mt-2 text-sm text-red-500">{{ message . password[0] }}</p>
                 </div>
 
                 <div>
@@ -33,7 +35,7 @@
 
 <script setup>
     import {
-        ref, onMounted
+        ref
     } from 'vue';
     import {
         post
@@ -42,17 +44,40 @@
         useRouter
     } from 'vue-router';
     const router = useRouter();
+    const message = ref({
+        email: '',
+        password: ''
+    })
     const form = ref({
         email: '',
         password: ''
     });
     const login = async () => {
         try {
-             data = await post('/login', form.value);
-            console.log('user', data);
+           
+            const data = await post('/login', form.value);
+
+          
+            localStorage.setItem('token', data.token);
+            localStorage.setItem('name', data.name);
+            localStorage.setItem('email', data.email);
+            localStorage.setItem('phone', data.phone);
+            axios.defaults.headers.common['Authorization'] = `Bearer ${data.token}`;
+
+            console.log('token', localStorage.getItem('token'));
+
             // router.push('/user-profile');
+
         } catch (error) {
-            console.error('Login failed:', error.response?.data);
+            if (error.response) {
+                message.value.email = error.response.data.errors?.email || '';
+                message.value.password = error.response.data.errors?.password || '';
+
+                console.log('Validation error:', message.value.email);
+                console.error('Login failed:', error.response?.data);
+            } else {
+                console.error('Network error or unknown:', error);
+            }
         }
-    }
+    };
 </script>
