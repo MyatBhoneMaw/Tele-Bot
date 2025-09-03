@@ -48,8 +48,9 @@
     });
     const login = async () => {
         try {
-            await post('/login', form.value);
-            router.push('/user-profile');
+             data = await post('/login', form.value);
+            console.log('user', data);
+            // router.push('/user-profile');
         } catch (error) {
             console.error('Login failed:', error.response?.data);
         }
