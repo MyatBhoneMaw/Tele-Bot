@@ -8,6 +8,7 @@ const api = axios.create({
   baseURL: API_BASE_URL,
   headers: {
     'Accept': 'application/json',
+    // Authorization: `Bearer ${token}`,
   },
 });
 
@@ -18,12 +19,7 @@ api.interceptors.request.use(config => {
     const user = JSON.parse(userStr);
     if (user.token) {
       config.headers.Authorization = `Bearer ${user.token}`;
-    } else {
-      if(userStr){
-        localStorage.removeItem('user');
-      }
-      router.push('/login')
-    }
+    } 
   }
   return config;
 });
@@ -37,9 +33,14 @@ api.interceptors.response.use(
       localStorage.removeItem('user');
       router.push('/login');
     }
+    
+
     return Promise.reject(error);
   }
 );
+
+
+
 // ==========================
 //  CRUD API FUNCTIONS
 // ==========================
@@ -66,6 +67,18 @@ export const post = async (endpoint, data, fileFieldName = 'file') => {
 
   return response.data;
 };
+
+//only data no file
+export const postJson = async (endpoint, data = {}) => {
+  const response = await api.post(endpoint, data, {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+
+  return response.data;
+};
+
 
 //  Read (GET)
 export const get = async (endpoint, params = {}) => {

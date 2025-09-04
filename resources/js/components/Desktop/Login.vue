@@ -27,7 +27,6 @@
                         Log In
                     </button>
                 </div>
-                {{ form }}
             </form>
         </div>
     </div>
