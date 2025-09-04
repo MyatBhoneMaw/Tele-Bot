@@ -17,7 +17,7 @@
                                 Full name
                             </dt>
                             <dd class="text-sm text-cyan-200 col-span-2">
-                                MMSDE
+                                {{ user.name }}
                             </dd>
                         </div>
                         <div class="py-4 grid grid-cols-3 gap-4">
@@ -25,7 +25,7 @@
                                 Email address
                             </dt>
                             <dd class="text-sm text-cyan-200 col-span-2">
-                                some-email
+                                {{ user.email }}
                             </dd>
                         </div>
                         <div class="py-4 grid grid-cols-3 gap-4">
@@ -33,7 +33,7 @@
                                 Phone number
                             </dt>
                             <dd class="text-sm text-cyan-200 col-span-2">
-                                some-phone
+                                {{ user.phone }}
                             </dd>
                         </div>
                         <div class="py-4 grid grid-cols-3 gap-4">
@@ -55,5 +55,7 @@
 
 <script setup>
     import layout from '@/Layouts/layout.vue'
+    const user = JSON.parse(localStorage.getItem('user'));
+    console.log('hello', user);
 
 </script>

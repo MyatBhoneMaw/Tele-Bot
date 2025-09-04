@@ -18,6 +18,11 @@ api.interceptors.request.use(config => {
     const user = JSON.parse(userStr);
     if (user.token) {
       config.headers.Authorization = `Bearer ${user.token}`;
+    } else {
+      if(userStr){
+        localStorage.removeItem('user');
+      }
+      router.push('/login')
     }
   }
   return config;
