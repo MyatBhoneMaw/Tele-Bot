@@ -19,7 +19,6 @@ class UserController extends Controller
 {
     public function createUser(UserRequest $request)
     {
-        // dd($request->all());
         try {
             $user = User::create([
                 'name' => $request->name,
@@ -89,5 +88,13 @@ class UserController extends Controller
                 500,
             );
         }
+    }
+
+    public function delete(Request $request)
+    {
+        return 'hello';
+        // $id = $request->id;
+        // $user = User::where('id' , $id)->first();
+        // return $user;
     }
 }

@@ -14,12 +14,33 @@
                 </thead>
                 <tbody class="">
                     <tr v-for="(data, i) in employees" :key="i">
-                        <td class="py-4 px-6 border-b border-gray-200">{{ i+1 }}</td>
-                        <td class="py-4 px-6 border-b border-gray-200">{{ data.name }}</td>
-                        <td class="py-4 px-6 border-b border-gray-200 truncate">{{ data.email }}</td>
-                        <td class="py-4 px-6 border-b border-gray-200">{{ data.phone }}</td>
+                        <td class="py-4 px-6 border-b border-gray-200">{{ i + 1 }}</td>
+                        <td class="py-4 px-6 border-b border-gray-200">{{ data . name }}</td>
+                        <td class="py-4 px-6 border-b border-gray-200 truncate">{{ data . email }}</td>
+                        <td class="py-4 px-6 border-b border-gray-200">{{ data . phone }}</td>
                         <td class="py-4 px-6 border-b border-gray-200">
-                            <span class="bg-green-500 text-black py-1 px-2 rounded-full text-xs">active</span>
+                            <div class="flex">
+                                <div class="px-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25"
+                                        viewBox="0 0 256 256">
+                                        <path fill="#28a745"
+                                            d="M224 128v80a16 16 0 0 1-16 16H48a16 16 0 0 1-16-16V48a16 16 0 0 1 16-16h80a8 8 0 0 1 0 16H48v160h160v-80a8 8 0 0 1 16 0m5.66-58.34l-96 96A8 8 0 0 1 128 168H96a8 8 0 0 1-8-8v-32a8 8 0 0 1 2.34-5.66l96-96a8 8 0 0 1 11.32 0l32 32a8 8 0 0 1 0 11.32m-17-5.66L192 43.31L179.31 56L200 76.69Z" />
+                                    </svg>
+                                </div>
+                                <div>
+                                    <button class="cursor-pointer" @click="userDelete(data.id)">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25"
+                                            viewBox="0 0 256 256">
+                                            <g fill="#c40b0b">
+                                                <path d="M200 56v152a8 8 0 0 1-8 8H64a8 8 0 0 1-8-8V56Z"
+                                                    opacity="0.2" />
+                                                <path
+                                                    d="M216 48h-40v-8a24 24 0 0 0-24-24h-48a24 24 0 0 0-24 24v8H40a8 8 0 0 0 0 16h8v144a16 16 0 0 0 16 16h128a16 16 0 0 0 16-16V64h8a8 8 0 0 0 0-16M96 40a8 8 0 0 1 8-8h48a8 8 0 0 1 8 8v8H96Zm96 168H64V64h128Zm-80-104v64a8 8 0 0 1-16 0v-64a8 8 0 0 1 16 0m48 0v64a8 8 0 0 1-16 0v-64a8 8 0 0 1 16 0" />
+                                            </g>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
                         </td>
                     </tr>
                 </tbody>
@@ -34,20 +55,22 @@
         ref
     } from 'vue';;
     import layout from '@/Layouts/layout.vue';
-    import get from '../../utils/api'
+    import { get, post } from '../../utils/api'
     const employees = ref([]);
-    const no = ref(0);
     const fetchEmployee = async () => {
         try {
             const data = await get('/employee');
             if (data) {
                 employees.value = data.data.data
             }
-            console.log('res-employee', data.data.data);
         } catch (error) {
             console.log(error);
         }
+    }
 
+    const userDelete  = async (id) => {
+        const data = await post('/delete' , {id : id});
+        console.log('hello-user', data);
     }
 
     fetchEmployee();

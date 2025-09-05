@@ -41,7 +41,7 @@
                                 Address
                             </dt>
                             <dd class="text-sm text-cyan-200 col-span-2">
-                                some-address
+                                Mandalay
                             </dd>
                         </div>
                     </dl>
@@ -62,7 +62,6 @@
         useRouter
     } from 'vue-router';
     import {
-        postJson,
         post
     } from '../../utils/api'
     const router = useRouter();

@@ -15,4 +15,5 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/create-user', [UserController::class, 'createUser']);
     Route::get('/users', [UserController::class, 'packageBuyUser']);
     Route::get('/employee', [UserController::class, 'getEmployee']);
+    Route::post('/delete', [UserController::class, 'delete']);
 });
