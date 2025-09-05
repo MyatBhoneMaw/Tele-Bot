@@ -23,7 +23,7 @@
                                 <div class="px-2">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25"
                                         viewBox="0 0 256 256">
-                                        <path fill="#28a745"
+                                        <path fill="currentColor"
                                             d="M224 128v80a16 16 0 0 1-16 16H48a16 16 0 0 1-16-16V48a16 16 0 0 1 16-16h80a8 8 0 0 1 0 16H48v160h160v-80a8 8 0 0 1 16 0m5.66-58.34l-96 96A8 8 0 0 1 128 168H96a8 8 0 0 1-8-8v-32a8 8 0 0 1 2.34-5.66l96-96a8 8 0 0 1 11.32 0l32 32a8 8 0 0 1 0 11.32m-17-5.66L192 43.31L179.31 56L200 76.69Z" />
                                     </svg>
                                 </div>
@@ -55,7 +55,7 @@
         ref
     } from 'vue';;
     import layout from '@/Layouts/layout.vue';
-    import { get, post } from '../../utils/api'
+    import get from '../../utils/api'
     const employees = ref([]);
     const fetchEmployee = async () => {
         try {
@@ -66,11 +66,12 @@
         } catch (error) {
             console.log(error);
         }
+
     }
 
     const userDelete  = async (id) => {
-        const data = await post('/delete' , {id : id});
-        console.log('hello-user', data);
+        const data = await ('/delete' , id);
+        console.log('hello-user',);
     }
 
     fetchEmployee();
