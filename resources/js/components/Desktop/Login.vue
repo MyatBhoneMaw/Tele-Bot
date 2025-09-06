@@ -62,9 +62,7 @@
             if (error.response) {
                 message.value.email = error.response.data.errors?.email || '';
                 message.value.password = error.response.data.errors?.password || '';
-            } else {
-                console.error('Network error or unknown:', error);
-            }
+            } 
         }
     };
 </script>
