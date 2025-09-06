@@ -28,17 +28,19 @@
                                     </svg>
                                 </div>
                                 <div>
-                                    <button class="cursor-pointer" @click="userDelete(data.id)">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25"
-                                            viewBox="0 0 256 256">
-                                            <g fill="#c40b0b">
-                                                <path d="M200 56v152a8 8 0 0 1-8 8H64a8 8 0 0 1-8-8V56Z"
-                                                    opacity="0.2" />
-                                                <path
-                                                    d="M216 48h-40v-8a24 24 0 0 0-24-24h-48a24 24 0 0 0-24 24v8H40a8 8 0 0 0 0 16h8v144a16 16 0 0 0 16 16h128a16 16 0 0 0 16-16V64h8a8 8 0 0 0 0-16M96 40a8 8 0 0 1 8-8h48a8 8 0 0 1 8 8v8H96Zm96 168H64V64h128Zm-80-104v64a8 8 0 0 1-16 0v-64a8 8 0 0 1 16 0m48 0v64a8 8 0 0 1-16 0v-64a8 8 0 0 1 16 0" />
-                                            </g>
-                                        </svg>
-                                    </button>
+                                    <!-- <form @submit="userDelete(data.id)"> -->
+                                        <button class="cursor-pointer" @click="userDelete(data.id)">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25"
+                                                viewBox="0 0 256 256">
+                                                <g fill="#c40b0b">
+                                                    <path d="M200 56v152a8 8 0 0 1-8 8H64a8 8 0 0 1-8-8V56Z"
+                                                        opacity="0.2" />
+                                                    <path
+                                                        d="M216 48h-40v-8a24 24 0 0 0-24-24h-48a24 24 0 0 0-24 24v8H40a8 8 0 0 0 0 16h8v144a16 16 0 0 0 16 16h128a16 16 0 0 0 16-16V64h8a8 8 0 0 0 0-16M96 40a8 8 0 0 1 8-8h48a8 8 0 0 1 8 8v8H96Zm96 168H64V64h128Zm-80-104v64a8 8 0 0 1-16 0v-64a8 8 0 0 1 16 0m48 0v64a8 8 0 0 1-16 0v-64a8 8 0 0 1 16 0" />
+                                                </g>
+                                            </svg>
+                                        </button>
+                                    <!-- </form> -->
                                 </div>
                             </div>
                         </td>
@@ -56,6 +58,7 @@
     } from 'vue';;
     import layout from '@/Layouts/layout.vue';
     import get from '../../utils/api'
+    import { post } from '../../utils/api';
     const employees = ref([]);
     const fetchEmployee = async () => {
         try {
@@ -69,9 +72,9 @@
 
     }
 
-    const userDelete  = async (id) => {
-        const data = await ('/delete' , id);
-        console.log('hello-user',);
+    const userDelete = async (id) => {
+        const data = await post('/delete', { id : id});
+        console.log('hello-user', data);
     }
 
     fetchEmployee();

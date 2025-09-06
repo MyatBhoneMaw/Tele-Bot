@@ -12,6 +12,7 @@ use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\ValidationException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Throwable;
 
@@ -92,9 +93,14 @@ class UserController extends Controller
 
     public function delete(Request $request)
     {
-        return 'hello';
-        // $id = $request->id;
-        // $user = User::where('id' , $id)->first();
-        // return $user;
+        $id = $request->id;
+        $user = User::find($id);
+        if (!$user) {
+            throw ValidationException::withMessages(['message' => 'User Not Found']);
+        }
+        $user->delete();
+        return response()->json([
+            'message' => 'success',
+        ]);
     }
 }
