@@ -79,7 +79,7 @@ class UserController extends Controller
             $user = User::query()
                 ->whereNotNull(['name', 'email', 'phone'])
                 ->latest()
-                ->paginate(10);
+                ->paginate(11);
             return $user;
         } catch (Exception $e) {
             return response()->json(

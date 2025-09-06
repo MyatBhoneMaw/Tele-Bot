@@ -55,20 +55,13 @@
         try {
            
             const data = await post('/login', form.value);
-
-            console.log('initial-data', data);
-            localStorage.setItem('user', JSON.stringify(data));
-            console.log('my-user',JSON.parse(localStorage.getItem('user')));
-        
+            localStorage.setItem('user', JSON.stringify(data));        
             router.push('/');
 
         } catch (error) {
             if (error.response) {
                 message.value.email = error.response.data.errors?.email || '';
                 message.value.password = error.response.data.errors?.password || '';
-
-                console.log('Validation error:', message.value.email);
-                console.error('Login failed:', error.response?.data);
             } else {
                 console.error('Network error or unknown:', error);
             }

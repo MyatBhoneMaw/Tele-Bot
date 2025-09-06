@@ -1,7 +1,9 @@
 <template>
     <layout>
         <div class="shadow-lg rounded-lg overflow-hidden mx-4 md:mx-10 py-10">
-            <!-- {{ employees }} -->
+            <div v-if="success">
+                <p class="bg-green-500">{{ success }}</p>
+            </div>
             <table class="w-full table-fixed text-cyan-300 rounded bg-gray-900">
                 <thead>
                     <tr class="text-purple-500">
@@ -60,6 +62,7 @@
     import get from '../../utils/api'
     import { post } from '../../utils/api';
     const employees = ref([]);
+    const success = ref('');
     const fetchEmployee = async () => {
         try {
             const data = await get('/employee');
@@ -73,8 +76,18 @@
     }
 
     const userDelete = async (id) => {
-        const data = await post('/delete', { id : id});
-        console.log('hello-user', data);
+        try {
+            const data = await post('/delete', { id : id});
+            if(data){
+                success.value = data.message
+                fetchEmployee();
+            }
+        }catch(error) {
+            if(error.response){
+                console.log(error.response.data);
+            }
+        }
+        
     }
 
     fetchEmployee();
