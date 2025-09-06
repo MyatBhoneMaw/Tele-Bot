@@ -12,7 +12,6 @@
           </p>
         </div>
       </transition>
-
       
       <table class="w-full table-fixed text-cyan-300 rounded bg-gray-900">
         <thead>
@@ -90,7 +89,7 @@ const userDelete = async (id) => {
 
       setTimeout(() => {
         success.value = '';
-      }, 3000);
+      }, 2000);
     }
   } catch (error) {
     if (error.response) {

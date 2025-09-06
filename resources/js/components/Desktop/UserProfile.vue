@@ -6,9 +6,6 @@
                     <h3 class="text-xl font-semibold text-cyan-300">
                         Profile
                     </h3>
-                    <!-- <p class="mt-1 text-sm text-cyan-500">
-                        This is some information about the user.
-                    </p> -->
                 </div>
                 <div class="px-6 py-5">
                     <dl class="divide-y divide-cyan-800">
