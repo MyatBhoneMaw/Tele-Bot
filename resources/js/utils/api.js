@@ -139,7 +139,6 @@ const handleFileChange = (e) => {
 const submit = async () => {
   try {
     const response = await post('/documents', form.value, 'file');
-    console.log('Created:', response);
   } catch (error) {
     console.error('Create Error:', error);
   }
@@ -201,7 +200,6 @@ const handleFileChange = (e) => {
 const updateDocument = async () => {
   try {
     await put(`/documents/${form.value.id}`, form.value, 'file', 'POST'); // Laravel usually spoof PUT via POST
-    console.log('Updated');
   } catch (error) {
     console.error('Update Error:', error);
   }
@@ -223,7 +221,6 @@ import { destroy } from '@/utils/api';
 const deleteDocument = async (id) => {
   try {
     await destroy(`/documents/${id}`);
-    console.log(`Document ${id} deleted`);
   } catch (error) {
     console.error('Delete Error:', error);
   }

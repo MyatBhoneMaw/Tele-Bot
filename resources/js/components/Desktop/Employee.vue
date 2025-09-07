@@ -96,7 +96,6 @@
     watch(
         () => debouncedSearch.value,
         (newVal) => {
-            console.log('Searching for:', newVal);
             fetchEmployee();
         }
     );

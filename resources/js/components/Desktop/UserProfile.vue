@@ -72,7 +72,7 @@
             localStorage.removeItem('user');
             router.push('/login');
         } else {
-            console.log(error)
+            console.log('error')
         }
     }
 </script>
