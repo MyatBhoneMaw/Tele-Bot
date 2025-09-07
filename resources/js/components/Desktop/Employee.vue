@@ -105,6 +105,7 @@
         try {
             const searchText = debouncedSearch.value;
             const data = await get(`/employee?search=${encodeURIComponent(searchText)}`);
+            // const data = await get('/employee', { search: searchText });
             if (data) {
                 employees.value = data.data.data;
             }

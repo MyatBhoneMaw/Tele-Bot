@@ -77,13 +77,14 @@ class UserController extends Controller
     public function getEmployee(Request $request)
     {
         try {
-            $search = $request->query('search');
-            // return $search;
+            // $search = $request->query('search');
+            $search = $request->input('search');
             $user = User::query()
                 ->whereNotNull(['name', 'email', 'phone'])
-                ->when($search, function($q , $search) {
-                    $q->where(function($query)use($search) {
-                        $query->where('name', 'like', "%f{$search}%")
+                ->when($search, function ($q, $search) {
+                    $q->where(function ($query) use ($search) {
+                        $query
+                            ->where('name', 'like', "%{$search}%")
                             ->orWhere('email', 'like', "%{$search}%")
                             ->orWhere('phone', 'like', "%{$search}%");
                     });
