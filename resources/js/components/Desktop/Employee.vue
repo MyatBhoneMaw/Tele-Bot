@@ -3,12 +3,12 @@
         <div class="flex justify-end mx-4 md:mx-10 pt-5">
             <div
                 class="flex items-center w-80 rounded-full bg-gray-900 shadow-[5px_5px_10px_#111827,-5px_-5px_10px_#374151]">
-                <input type="text" placeholder="Search...."
+                <input type="text" placeholder="Search...." v-model="search"
                     class="flex-1 px-5 py-3 bg-transparent text-cyan-500 placeholder-cyan-500 outline-none" />
             </div>
         </div>
-        P
-        <div class="shadow-lg rounded-lg overflow-hidden mx-4 md:mx-10 mb-8 relative">
+
+        <div class="shadow-lg rounded-lg overflow-hidden mx-4 md:mx-10 mb-8 relative mt-5">
             <transition name="fade">
                 <div v-if="success || validation" class="fixed top-4 right-4 z-50">
                     <p class="bg-green-500 text-white px-4 py-2 rounded shadow-md" v-if="success">
@@ -31,6 +31,11 @@
                     </tr>
                 </thead>
                 <tbody>
+                    <tr v-if="employees.length === 0">
+                        <td colspan="5" class="text-center text-red-400 py-6">
+                            User Not Found
+                        </td>
+                    </tr>
                     <tr v-for="(data, i) in employees" :key="i">
                         <td class="py-4 px-6 border-b border-gray-700">{{ i + 1 }}</td>
                         <td class="py-4 px-6 border-b border-gray-700">{{ data . name }}</td>
@@ -69,21 +74,38 @@
 
 <script setup>
     import {
-        ref
+        ref,
+        watch
     } from 'vue';
-    import layout from '@/Layouts/layout.vue';
-    import get from '../../utils/api';
     import {
+        useDebounce
+    } from '@vueuse/core';
+    import layout from '@/Layouts/layout.vue';
+    import get, {
         post
     } from '../../utils/api';
 
     const employees = ref([]);
     const success = ref('');
     const validation = ref('');
+    const search = ref('');
+
+
+    const debouncedSearch = useDebounce(search, 1000);
+
+    watch(
+        () => debouncedSearch.value,
+        (newVal) => {
+            console.log('Searching for:', newVal);
+            fetchEmployee();
+        }
+    );
+
 
     const fetchEmployee = async () => {
         try {
-            const data = await get('/employee');
+            const searchText = debouncedSearch.value;
+            const data = await get(`/employee?search=${encodeURIComponent(searchText)}`);
             if (data) {
                 employees.value = data.data.data;
             }
@@ -91,6 +113,7 @@
             console.error('Error fetching employees:', error);
         }
     };
+
 
     const userDelete = async (id) => {
         try {
@@ -101,7 +124,6 @@
                 success.value = data.message;
                 validation.value = '';
                 fetchEmployee();
-
                 setTimeout(() => {
                     success.value = '';
                 }, 2000);

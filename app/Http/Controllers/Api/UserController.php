@@ -12,6 +12,7 @@ use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Redis;
 use Illuminate\Validation\ValidationException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Throwable;
@@ -73,18 +74,27 @@ class UserController extends Controller
         }
     }
 
-    public function getEmployee()
+    public function getEmployee(Request $request)
     {
         try {
+            $search = $request->query('search');
+            // return $search;
             $user = User::query()
                 ->whereNotNull(['name', 'email', 'phone'])
+                ->when($search, function($q , $search) {
+                    $q->where(function($query)use($search) {
+                        $query->where('name', 'like', "%f{$search}%")
+                            ->orWhere('email', 'like', "%{$search}%")
+                            ->orWhere('phone', 'like', "%{$search}%");
+                    });
+                })
                 ->latest()
                 ->paginate(11);
-            return $user;
+            return EmployeeResource::collection($user);
         } catch (Exception $e) {
             return response()->json(
                 [
-                    'message' => 'Something is wrong',
+                    'message' => $e->getMessage(),
                 ],
                 500,
             );
