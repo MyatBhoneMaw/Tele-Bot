@@ -77,7 +77,6 @@ class UserController extends Controller
     public function getEmployee(Request $request)
     {
         try {
-            // $search = $request->query('search');
             $search = $request->input('search');
             $user = User::query()
                 ->whereNotNull(['name', 'email', 'phone'])
