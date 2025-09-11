@@ -7,6 +7,7 @@ import UserProfile from '../pages/userProfile.vue';
 import Plan from '../pages/plan.vue';
 import Employee from '../pages/employee.vue';
 import PageNotFound from '../pages/404.vue';
+import Edit from '../pages/edit.vue';
 
 const routes = [
   {
@@ -43,6 +44,11 @@ const routes = [
     path: '/employee',
     name: 'Employee',
     component: Employee
+  },
+  {
+    path : '/employee/:id/edit',
+    name : 'EmployeeEdit',
+    component : Edit
   }
 ];
 

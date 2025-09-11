@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Enums\PaymentStatus;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\EmployeeEditRequest;
 use App\Http\Requests\UserRequest;
 use App\Http\Resources\EmployeeResource;
 use App\Http\Resources\PurchaseResource;
@@ -105,12 +106,19 @@ class UserController extends Controller
     {
         $id = $request->id;
         $user = User::find($id);
-        if (!$user) {
-            throw ValidationException::withMessages(['message' => 'User Not Found']);
-        }
+        // if (!$user) {
+        //     throw ValidationException::withMessages(['message' => 'User Not Found']);
+        // }
         $user->delete();
         return response()->json([
             'message' => 'success',
         ]);
+    }
+
+    public function show($id) 
+    {
+        $user = User::find($id);
+
+        return new EmployeeResource($user);
     }
 }
