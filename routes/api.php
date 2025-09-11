@@ -16,5 +16,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/users', [UserController::class, 'packageBuyUser']);
     Route::get('/employee', [UserController::class, 'getEmployee']);
     Route::get('/employee/{id}', [UserController::class, 'show']);
+    Route::post('/employee/{id}/update', [UserController::class, 'update']);
     Route::post('/delete', [UserController::class, 'delete']);
 });

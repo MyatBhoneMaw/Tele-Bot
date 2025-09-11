@@ -14,9 +14,11 @@
         <div class="grid grid-cols-1 gap-6">
           <!-- Name -->
           <div>
-            <label for="name" class="block text-sm font-medium text-cyan-300 mb-1">Name</label>            <input
+            <label for="name" class="block text-sm font-medium text-cyan-300 mb-1">Name</label>
+            <input
               type="text"
               v-model="form.name"
+              value="user.name"
               placeholder="Full Name"
               id="name"
               class="w-full bg-gray-800 border border-cyan-500  px-4 py-2 rounded focus:outline-none focus:ring-2 focus:ring-cyan-500"
@@ -66,7 +68,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 import layout from '@/Layouts/layout.vue';
 import { get } from '../../utils/api';
 import { useRoute } from 'vue-router';
@@ -83,12 +85,14 @@ const form = ref({
 
 const getUser = async () => {
   try {
-    const response = await get(`/employee/${id}`);
-    user.value = response?.data;
-
-    form.value.name = user.value.name ;
+    const data = await get(`/employee/${id}`);
+    user.value = data?.data;
+    
+    form.value.name = user.value.name;
     form.value.email = user.value.email;
     form.value.phone = user.value.phone;
+
+    console.log('User loaded:', user.value);
   } catch (error) {
     if (error.response) {
       console.log(error.response);
@@ -98,3 +102,4 @@ const getUser = async () => {
 
 getUser();
 </script>
+

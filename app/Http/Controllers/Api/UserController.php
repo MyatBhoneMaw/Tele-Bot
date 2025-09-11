@@ -116,9 +116,10 @@ class UserController extends Controller
     }
 
     public function show($id) 
-    {
-        $user = User::find($id);
+    {   
+        return $id;
+        // $user = User::find($id);
 
-        return new EmployeeResource($user);
+        // return new EmployeeResource($user);
     }
 }
