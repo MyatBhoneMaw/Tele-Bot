@@ -11,6 +11,7 @@ use App\Http\Resources\PurchaseResource;
 use App\Models\Purchase;
 use App\Models\User;
 use Exception;
+use Illuminate\Auth\Events\Validated;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redis;
@@ -106,20 +107,44 @@ class UserController extends Controller
     {
         $id = $request->id;
         $user = User::find($id);
-        // if (!$user) {
-        //     throw ValidationException::withMessages(['message' => 'User Not Found']);
-        // }
+        if (!$user) {
+            throw ValidationException::withMessages(['message' => 'User Not Found']);
+        }
         $user->delete();
         return response()->json([
             'message' => 'success',
         ]);
     }
 
-    public function show($id) 
-    {   
-        return $id;
-        // $user = User::find($id);
+    public function show($id)
+    {
+        try {
+            $user = User::find($id);
+            if (!$user) {
+                throw ValidationException::withMessages(['message' => 'User Not Fount']);
+            }
+            return new EmployeeResource($user);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Something is wrong',
+            ]);
+        }
+    }
 
-        // return new EmployeeResource($user);
+    public function update($id,EmployeeEditRequest $request)
+    {
+        try {
+            $user = User::find($id);
+            $user->update([
+                'name' => $request->name,
+                'email' => $request->email,
+                'phone' => $request->phone
+            ]);
+            return response()->json(['message' => 'success']);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Something is wrong'
+            ], 500);
+        }
     }
 }
