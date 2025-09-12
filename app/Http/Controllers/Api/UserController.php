@@ -135,6 +135,9 @@ class UserController extends Controller
     {
         try {
             $user = User::find($id);
+            if(!$user) {
+                throw ValidationException::withMessages(['message' => 'User Not Found']);
+            }
             $user->update([
                 'name' => $request->name,
                 'email' => $request->email,

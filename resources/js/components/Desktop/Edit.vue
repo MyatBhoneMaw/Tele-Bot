@@ -1,11 +1,10 @@
 <template>
     <layout>
         <div class="min-h-screen flex flex-col items-center py-10 px-4 select-none">
-
             <!-- Title -->
             <div class="w-full max-w-xl bg-cyan-950 text-center py-4 rounded shadow-md">
                 <h1 class="text-2xl font-semibold text-cyan-400 animate-fade-in-up">
-                    {{ errorMessage ? errorMessage : 'Edit User' }} 
+                    {{ errorMessage ? errorMessage : 'Edit User' }}
                 </h1>
             </div>
 
@@ -40,7 +39,8 @@
                 </div>
                 <!-- Submit Button -->
                 <div class="text-right">
-                    <router-link to="/employee" class="bg-gray-500 hover:bg-gray-600  font-medium py-2 px-6 rounded transition duration-150 mx-3">Back</router-link>
+                    <router-link to="/employee"
+                        class="bg-gray-500 hover:bg-gray-600  font-medium py-2 px-6 rounded transition duration-150 mx-3">Back</router-link>
                     <button type="submit"
                         class="bg-cyan-500 hover:bg-cyan-600  font-medium py-2 px-6 rounded transition duration-150">
                         Update
@@ -104,12 +104,23 @@
             }
         } catch (error) {
             if (error.response) {
-                message.value.name = error.response?.data?.errors?.name
-                message.value.email = error.response?.data?.errors?.email
-                message.value.phone = error.response?.data?.errors?.phone
-                errorMessage.value = error.message
+                const errors = error.response?.data?.errors;
+
+                message.value.name = errors?.name;
+                message.value.email = errors?.email;
+                message.value.phone = errors?.phone;
+
+                // Error Message ကို အထဲက message array ထဲမှ ဆွဲထုတ်
+                if (errors?.message && Array.isArray(errors.message)) {
+                    errorMessage.value = errors.message[0];
+                } else {
+                    errorMessage.value = error.response?.data?.message || "Something went wrong";
+                }
+            } else {
+                errorMessage.value = "Network error or server did not respond.";
             }
         }
     }
+
     getUser();
 </script>
