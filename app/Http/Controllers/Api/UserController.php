@@ -105,15 +105,21 @@ class UserController extends Controller
 
     public function delete(Request $request)
     {
-        $id = $request->id;
-        $user = User::find($id);
-        if (!$user) {
-            throw ValidationException::withMessages(['message' => 'User Not Found']);
+        try {
+            $id = $request->id;
+            $user = User::find($id);
+            if (!$user) {
+                throw ValidationException::withMessages(['message' => 'User Not Found']);
+            }
+            $user->delete();
+            return response()->json([
+                'message' => 'success',
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Something is wrong',
+            ]);
         }
-        $user->delete();
-        return response()->json([
-            'message' => 'success',
-        ]);
     }
 
     public function show($id)
@@ -131,23 +137,26 @@ class UserController extends Controller
         }
     }
 
-    public function update($id,EmployeeEditRequest $request)
+    public function update($id, EmployeeEditRequest $request)
     {
         try {
             $user = User::find($id);
-            if(!$user) {
+            if (!$user) {
                 throw ValidationException::withMessages(['message' => 'User Not Found']);
             }
             $user->update([
                 'name' => $request->name,
                 'email' => $request->email,
-                'phone' => $request->phone
+                'phone' => $request->phone,
             ]);
             return response()->json(['message' => 'success']);
         } catch (\Exception $e) {
-            return response()->json([
-                'message' => 'Something is wrong'
-            ], 500);
+            return response()->json(
+                [
+                    'message' => 'Something is wrong',
+                ],
+                500,
+            );
         }
     }
 }
